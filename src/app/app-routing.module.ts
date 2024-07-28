@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth.guard'; // Ensure this import is correct
+import { HomeComponent } from './home/home.component'; // Ensure this import is correct
+import { CategorySelectionComponent } from './category-selection/category-selection.component'; // New import
 
 const routes: Routes = [
-  { path: '',loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
-  { path: 'signup',loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationModule) }
+  { path: '', component: CategorySelectionComponent }, // Set the new component as the initial page
+  { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
+  { path: 'signup', loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationModule) },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] } // Add this route
 ];
 
 @NgModule({

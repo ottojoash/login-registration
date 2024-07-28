@@ -1,17 +1,29 @@
-<div class="form-container">
-  <form class="form-signin login-form"  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h3 class="txt-color-mg">Sign in</h3>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email" required autofocus>
-    <label for="inputPassword" class="sr-only mt-2">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password" required>
-    <div class="row">
-      <div class="col-8 mt-2 anchor"  (click)="openRegistrationPage()">New User?</div>
-      <div class="col-4">
-        <button class="btn btn-lg btn-primary btn-block mt-2 right-corner" type="submit">Log in</button>
-      </div>
+<div class="login-container">
+  <div class="login-content">
+    <div class="login-left">
+      <img src="assets/images/login-illustration.png" alt="Login Illustration">
     </div>
-  </form>
+    <div class="login-right">
+      <form class="form-signin login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2 class="txt-color-mg">Sign in</h2>
+        <div class="form-group">
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="sr-only mt-2">Password</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password" required>
+        </div>
+        <div class="forgot-password">
+          <a href="#">Forgot password?</a>
+        </div>
+        <div class="row">
+          <div class="col-8 mt-2 anchor" (click)="openRegistrationPage()"></div>
+          <div class="col-4">
+            <button class="btn btn-lg btn-primary btn-block mt-2 right-corner" type="submit">Log in</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
- 
-  

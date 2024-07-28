@@ -1,0 +1,29 @@
+<div class="category-selection-container">
+    <div class="category-info">
+      <h1>RegisterMe</h1>
+      <h2>Login to your <span>RegisterMe</span> Account</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <p><strong>Choose category</strong></p>
+          <p style="margin-left: -125px;"><br><br>Importer or Retailer or individual</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <p><strong>Fill the form</strong></p>
+          <p style="margin-left: -95px;"><br><br>Enter your login credentials and submit</p>
+        </div>
+      </div>
+      <button class="login-button" routerLink="/login">Login</button>
+      <p class="register-link">You don’t have an account? <a href="#" (click)="toggleCategories($event)">Register</a></p>
+    </div>
+  
+    <div class="category-selection" [@toggleCategories]="showCategories ? 'show' : 'hide'">
+      <h2>Choose Category</h2>
+      <button class="category-button" (click)="selectCategory('Importer')">Importer</button>
+      <button class="category-button" (click)="selectCategory('Retailer')">Retailer</button>
+      <button class="category-button" (click)="selectCategory('Individual')">Individual</button>
+      <button class="category-button" (click)="selectCategory('Institutions')">Institutions</button>
+    </div>
+  </div>
+  

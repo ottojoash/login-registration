@@ -1,15 +1,109 @@
-.form-container {
+.login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-.login-form {
-  max-width: 400px;
-  width: 100%;
+  background-color: #f0f2f5;
+  border: 2px solid #dcdcdc;
+  border-radius: 8px;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  .login-content {
+    display: flex;
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .login-left {
+      flex: 1;
+      background-color: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .login-right {
+      flex: 1;
+      padding: 40px;
+
+      h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: #333333;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #666666;
+          font-size: 0.9rem;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #dcdcdc;
+          border-radius: 4px;
+          font-size: 1rem;
+        }
+      }
+
+      .forgot-password {
+        margin-bottom: 1.5rem;
+
+        a {
+          color: #f39c12;
+          text-decoration: none;
+          font-size: 0.9rem;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .anchor {
+          color: #f39c12;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .btn-primary {
+          width: 160px;
+          background-color: #f39c12;
+          color: #ffffff;
+          border: none;
+          padding: 0.75rem;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 1rem;
+          transition: background-color 0.3s;
+          margin-left: -50px;
+          margin-bottom: -20px;
+
+          &:hover {
+            background-color: #e67e22;
+          }
+        }
+      }
+    }
+  }
 }
