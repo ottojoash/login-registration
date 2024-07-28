@@ -28,13 +28,13 @@ export class CategorySelectionComponent {
   constructor(private router: Router) {}
 
   toggleCategories(event: MouseEvent): void {
-    event.stopPropagation();  // Stop the click event from propagating
-    event.preventDefault();   // Prevent the default behavior
+    event.stopPropagation();
+    event.preventDefault();
     this.showCategories = !this.showCategories;
   }
 
   selectCategory(category: string): void {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/signup'], { queryParams: { category } });
     this.resetToDefault();
   }
 

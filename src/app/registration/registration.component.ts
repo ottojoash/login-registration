@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MongoService } from '../mongo.service'; // Import MongoService
+import { MongoService } from '../mongo.service';
 
 @Component({
   selector: 'app-registration',
@@ -10,8 +10,14 @@ import { MongoService } from '../mongo.service'; // Import MongoService
 })
 export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
+  selectedCategory: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private mongoService: MongoService) { 
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private mongoService: MongoService
+  ) { 
     this.registrationForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -25,7 +31,20 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Initialization logic if any
+    this.route.queryParams.subscribe(params => {
+      this.selectedCategory = params['category'];
+      this.adjustFormFields();
+    });
+  }
+
+  adjustFormFields(): void {
+    if (this.selectedCategory === 'Individual') {
+      this.registrationForm.controls['brn'].clearValidators();
+      this.registrationForm.controls['brn'].updateValueAndValidity();
+    } else {
+      this.registrationForm.controls['brn'].setValidators([Validators.required]);
+      this.registrationForm.controls['brn'].updateValueAndValidity();
+    }
   }
 
   async onSubmit() {
