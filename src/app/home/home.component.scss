@@ -1,0 +1,102 @@
+.dashboard-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 330px;
+    background-color: #1c3a4d;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 826px;
+  }
+  
+  .user-info {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .nav-links li {
+    margin: 10px 0;
+  }
+  
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .logout-button {
+    margin-top: auto;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .search-bar button {
+    background-color: #1c3a4d;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .form-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .form-group input {
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .upload-csv-button,
+  .register-button {
+    background-color: #1c3a4d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
