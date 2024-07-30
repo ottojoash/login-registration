@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Realm from 'realm-web';
 
 const app = new Realm.App({ id: 'voyance-ydubnnb' });
+// const app = new Realm.App({ id: 'application-0-xzxbpfo' });
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,26 @@ export class MongoService {
     }
   }
 
+  private initializeMongoDB() {
+    if (app.currentUser) {
+      this.mongodb = app.currentUser.mongoClient('mongodb-atlas').db('voyance');
+    }
+  }
+
   async login(email: string, password: string) {
     const credentials = Realm.Credentials.emailPassword(email, password);
     const user = await app.logIn(credentials);
     if (user) {
-      this.mongodb = user.mongoClient('mongodb-atlas').db('voyance');
+      this.initializeMongoDB();
     }
     return user;
   }
 
   async register(email: string, password: string, fullName: string, address: string, phoneNumber: string, brn: string, tin: string, data: { email: string; password: string; fullName: any; address: any; phoneNumber: any; brn: any; tin: any; }) {
     await app.emailPasswordAuth.registerUser({ email, password });
+    if (!this.mongodb) {
+      this.initializeMongoDB();
+    }
     const collection = this.mongodb.collection('users');
     await collection.insertOne(data);
   }
