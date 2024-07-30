@@ -1,53 +1,20 @@
 <div class="dashboard-container">
   <div class="sidebar">
     <div class="user-info">
-      <img [src]="user.profile.picture || 'assets/user.svg'" alt="User Icon" class="profile-pic">
+      <img src="assets/user.svg" alt="User Icon" class="profile-pic">
       <p>Welcome Back,<br><strong>{{ user.profile.email }}</strong></p>
     </div>
     <ul class="nav-links">
-      <li><a href="#"><img src="assets/register.svg" alt="Register Icon">Register gadget</a></li>
-      <li><a href="#"><img src="assets/report.svg" alt="Report Icon">Report gadget</a></li>
-      <li><a href="#"><img src="assets/view.svg" alt="View Icon">View gadgets</a></li>
-      <li><a href="#"><img src="assets/transfer.svg" alt="Transfer Icon">Transfer Ownership</a></li>
-      <li><a href="#"><img src="assets/notification.svg" alt="Notification Icon">Notifications</a></li>
+      <li><a routerLink="/home/register-gadget" routerLinkActive="active"><img src="assets/register.svg" alt="Register Icon"> Register gadget</a></li>
+      <li><a routerLink="/home/report-gadget" routerLinkActive="active"><img src="assets/report.svg" alt="Report Icon"> Report gadget</a></li>
+      <li><a routerLink="/home/view-gadgets" routerLinkActive="active"><img src="assets/view.svg" alt="View Icon"> View gadgets</a></li>
+      <li><a routerLink="/home/transfer-ownership" routerLinkActive="active"><img src="assets/transfer.svg" alt="Transfer Icon"> Transfer Ownership</a></li>
+      <li><a routerLink="/home/notifications" routerLinkActive="active"><img src="assets/notification.svg" alt="Notification Icon"> Notifications</a></li>
     </ul>
     <button (click)="logout()" class="logout-button">log out</button>
   </div>
 
   <div class="main-content">
-    <div class="search-bar">
-      <input type="text" placeholder="Search gadget">
-      <button><img src="assets/images/search.svg" alt="Search Icon"></button>
-    </div>
-    <div class="form-container">
-      <h2>Select Gadget</h2>
-      <button class="select-gadget-button">Laptop</button>
-      <form [formGroup]="gadgetForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <input type="text" formControlName="model" placeholder="Gadget model">
-          <input type="text" formControlName="imei" placeholder="IMEI">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="brand" placeholder="Gadget brand">
-          <input type="text" formControlName="serialNumber" placeholder="Serial Number">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="color" placeholder="Gadget color">
-          <input type="text" formControlName="description" placeholder="Description">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="purchaseLocation" placeholder="Purchase location">
-          <input type="text" formControlName="registrationDate" placeholder="Date of registration">
-        </div>
-        <div class="form-group">
-          <input type="text" formControlName="storageSize" placeholder="Storage size">
-          <input type="text" formControlName="simType" placeholder="SIM type">
-        </div>
-        <div class="form-group">
-          <button type="button" (click)="uploadCSV()" class="upload-csv-button">Upload csv</button>
-          <button type="submit" class="register-button">Register</button>
-        </div>
-      </form>
-    </div>
+    <router-outlet></router-outlet>
   </div>
 </div>
