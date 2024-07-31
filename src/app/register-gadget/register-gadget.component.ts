@@ -11,6 +11,7 @@ export class RegisterGadgetComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
+      model: ['', Validators.required],
       imei: ['', Validators.required],
       brand: ['', Validators.required],
       serialNumber: ['', Validators.required],

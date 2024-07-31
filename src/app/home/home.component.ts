@@ -9,6 +9,7 @@ export class HomeComponent {
   user = {
     profile: {
       picture: '', // Default profile picture
+      name:'joashotto',
       email: 'louisjoshbricks@gmail.com' // Default email
     }
   };

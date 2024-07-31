@@ -1,0 +1,118 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .transfer-ownership-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .tabs button {
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #e0e0e0;
+    color: #333;
+    // border-radius: 8px;
+  }
+  
+  .tabs button.active {
+    background-color: #320A28;
+    color: #fff;
+  }
+  
+  .tab-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .table-container {
+    width: 100%;
+  }
+  
+  .gadgets-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .gadgets-table th, .gadgets-table td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+  
+  .gadgets-table th {
+    background-color: #A69CAC;
+    color: #fff;
+  }
+  
+  .gadgets-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .gadgets-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    
+  }
+  
+  .action-button {
+    background-color: #1c3a4d;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .action-button i {
+    pointer-events: none;
+    
+  }
+  .confirm-button{
+    border-radius: 8px;
+  }
+  
+  .confirm-button:hover {
+    background-color: #155076;
+    border-radius: 8px;
+  }
+  
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .form-group input {
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
