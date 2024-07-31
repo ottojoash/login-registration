@@ -7,6 +7,11 @@ import { CategorySelectionComponent } from './category-selection/category-select
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';  // Ensure this import is correct
 import { FormsModule } from '@angular/forms';
+import { RegisterGadgetComponent } from './register-gadget/register-gadget.component';
+import { ReportGadgetComponent } from './report-gadget/report-gadget.component';
+import { ViewGadgetsComponent } from './view-gadgets/view-gadgets.component';
+import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 @NgModule({
@@ -14,6 +19,11 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     CategorySelectionComponent,
+    RegisterGadgetComponent,
+    ReportGadgetComponent,
+    ViewGadgetsComponent,
+    TransferOwnershipComponent,
+    NotificationsComponent,
 
   ],
   imports: [
