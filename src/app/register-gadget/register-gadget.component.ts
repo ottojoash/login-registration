@@ -1,5 +1,7 @@
+// src/app/register-gadget/register-gadget.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MongoService } from '../mongo.service';
 
 @Component({
   selector: 'app-register-gadget',
@@ -9,8 +11,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegisterGadgetComponent implements OnInit {
   registerForm: FormGroup;
   selectedTab: string = 'laptop';
+  notificationVisible: boolean = false;
+  notificationMessage!: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private mongoService: MongoService) {
     this.registerForm = this.fb.group({
       model: ['', Validators.required],
       imei: ['', Validators.required],
@@ -31,13 +35,28 @@ export class RegisterGadgetComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      // Handle form submission logic here
-      console.log(this.registerForm.value);
+      this.mongoService.addGadget(this.registerForm.value).then(result => {
+        console.log('Gadget registered successfully:', result);
+        // Show the popup notification
+         this.notificationMessage = 'Gadget registered successfully!';
+         this.notificationVisible = true;
+
+      // Hide the notification after 3 seconds
+          setTimeout(() => {
+            this.notificationVisible = false;
+          }, 3000);
+
+      // Optionally, you can reset the form after successful submission
+      this.registerForm.reset();
+        alert('Gadget registered successfully');
+      }).catch(error => {
+        console.error('Error registering gadget:', error);
+        alert('Error registering gadget');
+      });
     }
   }
 
   uploadCSV(): void {
-    // Handle CSV upload logic here
     console.log('CSV upload clicked');
   }
 

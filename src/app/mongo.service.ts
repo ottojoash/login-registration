@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import * as Realm from 'realm-web';
 
 const app = new Realm.App({ id: 'voyance-ydubnnb' });
-// const app = new Realm.App({ id: 'application-0-xzxbpfo' });
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +37,14 @@ export class MongoService {
     }
     const collection = this.mongodb.collection('users');
     await collection.insertOne(data);
+  }
+
+  async addGadget(gadget: any) {
+    if (!this.mongodb) {
+      throw new Error('No MongoDB client available. Make sure you are logged in.');
+    }
+    const collection = this.mongodb.collection('gadgets');
+    await collection.insertOne(gadget);
   }
 
   async getUser() {
