@@ -6,56 +6,67 @@ html, body {
 
 .dashboard-container {
   display: flex;
-  height: 90vh;
-  width: 900px;
+  height: 95vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f2f5;
 }
 
 .main-content {
-  flex-grow: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 900px;
+  width: 100%;
 }
 
 .form-container {
-  background-color: #fff;
   padding: 20px;
-  border-radius: 5px;
-  width:  100%;
 }
 
 h2 {
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.gadget-button {
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tab-button {
   background-color: #ccc;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  margin-bottom: 20px;
   border-radius: 8px;
+  width: 48%;
+  text-align: center;
+}
+
+.tab-button.active {
+  background-color: #4b2e83;
+  color: #ffffff;
 }
 
 .form-group {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-}
 
-.form-group input {
-  width: 48%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  input {
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 }
 
 .form-group.buttons {
   display: flex;
   justify-content: space-between;
-  width: 100%;
 }
 
 .upload-csv-button,
@@ -66,11 +77,12 @@ h2 {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .upload-csv-button img {
   width: 20px;
   height: 20px;
   margin-right: 10px;
-  border-radius: 8px;
 }
