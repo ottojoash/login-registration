@@ -12,6 +12,7 @@ import { ReportGadgetComponent } from './report-gadget/report-gadget.component';
 import { ViewGadgetsComponent } from './view-gadgets/view-gadgets.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,  // Ensure this is added to imports
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

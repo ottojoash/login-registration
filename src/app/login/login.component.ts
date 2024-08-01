@@ -25,21 +25,28 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      try {
-        const user = await this.mongoService.login(email, password);
-        if (user) {
-          this.router.navigate(['/home']);
+      this.mongoService.login(email, password).subscribe({
+        next: (response) => {
+          if (response.success) {
+            // Store token if needed
+            localStorage.setItem('authToken', response.token);
+            console.log('Login successful', response.token);
+            this.router.navigate(['/home']); // Navigate to the dashboard page
+          } else {
+            console.error('Login failed:', response.message);
+          }
+        },
+        error: (error) => {
+          console.error('Login failed:', error.error?.message || 'No error message provided');
         }
-      } catch (error) {
-        console.error('Login failed', error);
-      }
+      });
     }
   }
-
-  openRegistrationPage() {
+  
+  openRegistrationPage(): void {
     this.router.navigateByUrl('/signup');
   }
 }
