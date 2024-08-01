@@ -1,1 +1,13 @@
-[]
+[
+    {
+        "http_method": "POST",
+        "route": "/register",
+        "function_name": "register-gadget",
+        "validation_method": "NO_VALIDATION",
+        "respond_result": false,
+        "fetch_custom_user_data": true,
+        "create_user_on_auth": false,
+        "disabled": false,
+        "return_type": "JSON"
+    }
+]

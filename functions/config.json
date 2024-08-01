@@ -3,5 +3,10 @@
         "name": "resetFunc",
         "private": false,
         "can_evaluate": {}
+    },
+    {
+        "name": "register-gadget",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
