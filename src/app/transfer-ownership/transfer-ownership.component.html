@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let gadget of filteredGadgets()">
+          <tr *ngFor="let gadget of gadgets">
             <td>{{ gadget.name }}</td>
             <td>{{ gadget.type }}</td>
             <td>{{ gadget.sn }}</td>
@@ -43,14 +43,30 @@
   </div>
 
   <div *ngIf="selectedTab === 'piece'" class="tab-content">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search gadget"
+        class="search-bar"
+        (input)="onSearchInput($event)"
+      />
+      <div *ngIf="gadgetList.length > 0" class="gadget-dropdown">
+        <ul>
+          <li *ngFor="let gadget of gadgetList" (click)="selectGadget(gadget)">
+            {{ gadget.model }} - {{ gadget.brand }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <input type="text" placeholder="Name/Brand" [(ngModel)]="gadget.name" name="name">
-        <input type="text" placeholder="Type of Gadget" [(ngModel)]="gadget.type" name="type">
+        <input type="text" placeholder="Name/Brand" [(ngModel)]="gadget.name" name="name" required>
+        <input type="text" placeholder="Type of Gadget" [(ngModel)]="gadget.type" name="type" required>
       </div>
       <div class="form-group">
-        <input type="text" placeholder="S/N" [(ngModel)]="gadget.sn" name="sn">
-        <input type="text" placeholder="IMEI" [(ngModel)]="gadget.imei" name="imei">
+        <input type="text" placeholder="S/N" [(ngModel)]="gadget.sn" name="sn" required>
+        <input type="text" placeholder="IMEI" [(ngModel)]="gadget.imei" name="imei" required>
       </div>
       <div class="form-group">
         <input type="text" placeholder="Storage" [(ngModel)]="gadget.storage" name="storage">

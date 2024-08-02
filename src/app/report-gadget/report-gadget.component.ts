@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-report-gadget',
@@ -12,7 +12,7 @@ import { debounceTime } from 'rxjs/operators';
 export class ReportGadgetComponent implements OnInit {
   reportForm: FormGroup;
   searchInput$ = new Subject<string>();
-  isGadgetIdentifierEmpty = true;
+  gadgetList: any[] = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.reportForm = this.fb.group({
@@ -30,47 +30,43 @@ export class ReportGadgetComponent implements OnInit {
     });
 
     this.searchInput$
-      .pipe(debounceTime(300))
-      .subscribe(identifier => this.fetchGadgetDetails(identifier));
+      .pipe(
+        debounceTime(300),
+        switchMap(value => this.fetchGadgets(value)),
+        catchError(error => {
+          console.error(error);
+          return of([]);
+        })
+      )
+      .subscribe(data => this.gadgetList = data);
   }
 
   ngOnInit(): void {
     this.reportForm.get('gadgetIdentifier')?.valueChanges.subscribe(value => {
-      this.isGadgetIdentifierEmpty = !value;
       this.searchInput$.next(value);
     });
   }
 
-  fetchGadgetDetails(identifier: string) {
-    if (identifier) {
-      this.http.get<any>(`http://localhost:5000/api/gadgets/${identifier}`).subscribe(
-        data => {
-          this.reportForm.patchValue({
-            gadgetName: data.model || '',
-            gadgetBrand: data.brand || '',
-            gadgetColor: data.color || '',
-          });
-        },
-        (error: HttpErrorResponse) => {
-          console.error(error);
-          if (error.status === 404) {
-            alert('Gadget not found');
-          } else {
-            alert('An error occurred while fetching gadget details');
-          }
-        }
-      );
-    } else {
-      this.resetAutoFilledFields();
+  fetchGadgets(query: string) {
+    if (!query) {
+      return of([]);
     }
+    return this.http.get<any[]>(`http://localhost:5000/api/gadgets/search?query=${query}`);
   }
 
-  resetAutoFilledFields() {
+  selectGadget(gadget: any) {
     this.reportForm.patchValue({
-      gadgetName: '',
-      gadgetBrand: '',
-      gadgetColor: ''
+      gadgetIdentifier: gadget.identifier,
+      gadgetName: gadget.model,
+      gadgetBrand: gadget.brand,
+      gadgetColor: gadget.color
     });
+    this.gadgetList = [];
+  }
+
+  onSearchInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchInput$.next(input.value);
   }
 
   onSubmit() {
