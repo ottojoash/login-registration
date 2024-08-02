@@ -37,25 +37,28 @@ export class RegisterGadgetComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      console.log('Submitting form with data:', this.registerForm.value); // Log data to verify
-      this.mongoService.addGadget(this.registerForm.value).then(result => {
+      const formData = this.registerForm.value;
+      formData.type = this.selectedTab; // Add the selected tab as type
+      console.log('Submitting form data:', formData); // Log the data to be sent
+  
+      this.mongoService.addGadget(formData).then(result => {
         console.log('Gadget registered successfully:', result);
         this.notificationMessage = 'Gadget registered successfully!';
         this.notificationVisible = true;
-
         setTimeout(() => {
           this.notificationVisible = false;
         }, 3000);
-
         this.registerForm.reset();
-        this.selectedTab = 'laptop';  // Reset to default tab
-        this.selectTab(this.selectedTab);  // Re-apply form validation rules
+        this.selectedTab = 'laptop';
+        this.selectTab(this.selectedTab);
       }).catch(error => {
         console.error('Error registering gadget:', error);
         alert('Error registering gadget');
       });
     }
   }
+  
+  
 
   uploadCSV(): void {
     console.log('CSV upload clicked');
