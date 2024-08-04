@@ -51,7 +51,7 @@ export class ReportGadgetComponent implements OnInit {
     if (!query) {
       return of([]);
     }
-    return this.http.get<any[]>(`http://localhost:5000/api/gadgets/search?query=${query}`);
+    return this.http.get<any[]>(`http://localhost:5000/api/reports/search?query=${query}`);
   }
 
   selectGadget(gadget: any) {
@@ -71,7 +71,7 @@ export class ReportGadgetComponent implements OnInit {
 
   onSubmit() {
     if (this.reportForm.valid) {
-      this.http.post('http://localhost:5000/api/reports', this.reportForm.getRawValue())
+      this.http.post('http://localhost:5000/api/reports/report', this.reportForm.getRawValue())
         .subscribe(
           response => {
             alert('Report submitted successfully');

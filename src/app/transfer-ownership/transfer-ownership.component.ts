@@ -64,7 +64,7 @@ export class TransferOwnershipComponent {
     if (!query) {
       return of([]);
     }
-    return this.http.get<any[]>(`http://localhost:5000/api/gadgets/search?query=${query}`);
+    return this.http.get<any[]>(`http://localhost:5000/api/reports/search?query=${query}`);
   }
 
   selectGadget(gadget: any) {
