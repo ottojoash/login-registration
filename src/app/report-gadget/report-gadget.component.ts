@@ -42,6 +42,7 @@ export class ReportGadgetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // If you want the gadgetIdentifier to be auto-filled based on the selected gadget
     this.reportForm.get('gadgetIdentifier')?.valueChanges.subscribe(value => {
       this.searchInput$.next(value);
     });
@@ -56,12 +57,12 @@ export class ReportGadgetComponent implements OnInit {
 
   selectGadget(gadget: any) {
     this.reportForm.patchValue({
-      gadgetIdentifier: gadget.identifier,
+      gadgetIdentifier: gadget.serialNumber, // Assuming `sn` is the serial number field
       gadgetName: gadget.model,
       gadgetBrand: gadget.brand,
       gadgetColor: gadget.color
     });
-    this.gadgetList = [];
+    this.gadgetList = []; // Clear the dropdown after selection
   }
 
   onSearchInput(event: Event) {
