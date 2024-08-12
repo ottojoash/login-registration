@@ -32,9 +32,13 @@
           <input type="text" formControlName="network" placeholder="Network">
         </div>
         <div class="form-group buttons">
-          <button type="button" (click)="uploadCSV()" class="upload-csv-button">
-            <img src="assets/upload.svg" alt="Upload Icon"> Upload csv
-          </button>
+          <!-- File input for CSV upload -->
+          <div class="upload-container">
+            <input type="file" (change)="onFileChange($event)" accept=".csv" id="csvFileInput" style="display: none;">
+            <label for="csvFileInput" class="upload-csv-button">
+              <img src="assets/upload.svg" alt="Upload Icon"> Upload CSV
+            </label>
+          </div>
           <button type="submit" class="register-button">Register</button>
         </div>
       </form>

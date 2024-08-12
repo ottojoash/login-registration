@@ -12,6 +12,7 @@ export class RegisterGadgetComponent implements OnInit {
   selectedTab: string = 'laptop';  // Default tab
   notificationVisible: boolean = false;
   notificationMessage!: string;
+  selectedFile: File | null = null; // Store the selected file
 
   constructor(private fb: FormBuilder, private mongoService: MongoService) {
     this.registerForm = this.fb.group({
@@ -58,10 +59,30 @@ export class RegisterGadgetComponent implements OnInit {
     }
   }
   
-  
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.uploadCSV(this.selectedFile);
+    }
+  }
 
-  uploadCSV(): void {
-    console.log('CSV upload clicked');
+  uploadCSV(file: File): void {
+    console.log('CSV upload clicked with file:', file);
+
+    if (file) {
+      this.mongoService.uploadCSV(file).then(result => {
+        console.log('CSV uploaded successfully:', result);
+        this.notificationMessage = 'CSV uploaded successfully!';
+        this.notificationVisible = true;
+        setTimeout(() => {
+          this.notificationVisible = false;
+        }, 3000);
+      }).catch(error => {
+        console.error('Error uploading CSV:', error);
+        alert('Error uploading CSV');
+      });
+    }
   }
 
   selectTab(tab: string): void {

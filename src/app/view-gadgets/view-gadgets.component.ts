@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-view-gadgets',
@@ -9,15 +9,22 @@ import { HttpClient } from '@angular/common/http';
 export class ViewGadgetsComponent implements OnInit {
   searchQuery: string = '';
   gadgets: any[] = [];
+  private token: string = ''; // Assume token is retrieved and set from a service
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    // Retrieve token from a service or storage
+    this.token = localStorage.getItem('authToken') || ''; // or however you store the token
     this.fetchGadgets();
   }
 
   fetchGadgets(): void {
-    this.http.get<any[]>('http://localhost:5000/api/gadgets/view')
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    this.http.get<any[]>('http://localhost:5000/api/gadgets/view', { headers })
       .subscribe(
         data => {
           this.gadgets = data;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Subject, of } from 'rxjs';
 import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 
@@ -48,16 +48,25 @@ export class ReportGadgetComponent implements OnInit {
     });
   }
 
+  getAuthHeaders() {
+    const token = localStorage.getItem('authToken'); // Adjust if you're using a different storage mechanism
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
   fetchGadgets(query: string) {
     if (!query) {
       return of([]);
     }
-    return this.http.get<any[]>(`http://localhost:5000/api/reports/search?query=${query}`);
+    return this.http.get<any[]>(`http://localhost:5000/api/reports/search?query=${query}`, {
+      headers: this.getAuthHeaders()
+    });
   }
 
   selectGadget(gadget: any) {
     this.reportForm.patchValue({
-      gadgetIdentifier: gadget.serialNumber, // Assuming `sn` is the serial number field
+      gadgetIdentifier: gadget.serialNumber, // Assuming `serialNumber` is the field name
       gadgetName: gadget.model,
       gadgetBrand: gadget.brand,
       gadgetColor: gadget.color
@@ -72,17 +81,19 @@ export class ReportGadgetComponent implements OnInit {
 
   onSubmit() {
     if (this.reportForm.valid) {
-      this.http.post('http://localhost:5000/api/reports/report', this.reportForm.getRawValue())
-        .subscribe(
-          response => {
-            alert('Report submitted successfully');
-            this.reportForm.reset();
-          },
-          (error: HttpErrorResponse) => {
-            console.error('Error submitting report', error);
-            alert('An error occurred while submitting the report');
-          }
-        );
+      this.http.post('http://localhost:5000/api/reports/report', this.reportForm.getRawValue(), {
+        headers: this.getAuthHeaders()
+      })
+      .subscribe(
+        response => {
+          alert('Report submitted successfully');
+          this.reportForm.reset();
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error submitting report', error);
+          alert('An error occurred while submitting the report');
+        }
+      );
     } else {
       alert('Please fill in all required fields');
     }
