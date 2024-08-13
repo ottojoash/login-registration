@@ -16,7 +16,13 @@ export class HomeComponent {
     }
   };
 
+  isSidebarOpen = false;
+
   constructor(private router: Router, private authService: AuthService) {}
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
   logout() {
     this.authService.logout(); // Clear any authentication data
