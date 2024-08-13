@@ -24,13 +24,14 @@ export class TransferOwnershipComponent {
     year: ''
   };
   
+  // Sample data; replace or remove if fetching from the API
   gadgets = [
-    // Sample data; replace with actual data
     { name: 'Sample Gadget', type: 'Laptop', sn: '123456789', imei: '9876543210', storage: '256GB', ram: '16GB', color: 'Black', year: '2021' },
-    // Add more gadgets here
+    // Add more gadgets here or fetch from the API
   ];
 
   constructor(private http: HttpClient) {
+    // Search logic for fetching gadgets
     this.searchInput$
       .pipe(
         debounceTime(300),
@@ -48,6 +49,7 @@ export class TransferOwnershipComponent {
   }
 
   filteredGadgets() {
+    // Filter gadgets based on search query
     return this.gadgets.filter(gadget =>
       gadget.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       gadget.type.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
@@ -61,6 +63,7 @@ export class TransferOwnershipComponent {
   }
 
   fetchGadgets(query: string) {
+    // Fetch gadgets from the API based on search query
     if (!query) {
       return of([]);
     }
@@ -68,8 +71,9 @@ export class TransferOwnershipComponent {
   }
 
   selectGadget(gadget: any) {
+    // Update gadget details when selected
     this.gadget = {
-      name: gadget.model,
+      name: gadget.name,
       type: gadget.type,
       sn: gadget.sn,
       imei: gadget.imei,
@@ -82,11 +86,13 @@ export class TransferOwnershipComponent {
   }
 
   onSearchInput(event: Event) {
+    // Emit search input value to fetch gadgets
     const input = event.target as HTMLInputElement;
     this.searchInput$.next(input.value);
   }
 
   onSubmit() {
+    // Submit form data to the API
     if (this.gadget.name && this.gadget.type && this.gadget.sn && this.gadget.imei) {
       this.http.post('http://localhost:5000/api/ownership-transfer', this.gadget)
         .subscribe(
