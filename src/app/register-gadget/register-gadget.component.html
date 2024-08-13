@@ -7,16 +7,24 @@
         <button class="tab-button" [ngClass]="{'active': selectedTab === 'phone'}" (click)="selectTab('phone')">Phone</button>
       </div>
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <input type="text" formControlName="model" placeholder="Gadget model">
+        <div class="form-group" *ngIf="selectedTab === 'laptop'">
+          <input type="text" formControlName="model" placeholder="Model">
+          <input type="text" formControlName="phoneNumber" placeholder="Device ID">
+        </div>
+        <div class="form-group" *ngIf="selectedTab === 'phone'">
+          <input type="text" formControlName="model" placeholder="Model">
           <input type="text" formControlName="imei" placeholder="IMEI">
         </div>
+        <!-- <div class="form-group">
+          <input type="text" formControlName="model" placeholder="Model">
+          <input type="text" formControlName="imei" placeholder="IMEI">
+        </div> -->
         <div class="form-group">
-          <input type="text" formControlName="brand" placeholder="Gadget brand">
+          <input type="text" formControlName="brand" placeholder="Brand">
           <input type="text" formControlName="serialNumber" placeholder="Serial Number">
         </div>
         <div class="form-group">
-          <input type="text" formControlName="color" placeholder="Gadget color">
+          <input type="text" formControlName="color" placeholder="Color">
           <input type="text" formControlName="description" placeholder="Description">
         </div>
         <div class="form-group">
@@ -25,14 +33,13 @@
         </div>
         <div class="form-group" *ngIf="selectedTab === 'laptop'">
           <input type="text" formControlName="storageSize" placeholder="Storage size">
-          <input type="text" formControlName="simType" placeholder="SIM type">
+          <input type="text" formControlName="simType" placeholder="RAM">
         </div>
         <div class="form-group" *ngIf="selectedTab === 'phone'">
           <input type="text" formControlName="phoneNumber" placeholder="Phone number">
-          <input type="text" formControlName="network" placeholder="Network">
+          <input type="text" formControlName="network" placeholder="Sim Type">
         </div>
         <div class="form-group buttons">
-          <!-- File input for CSV upload -->
           <div class="upload-container">
             <input type="file" (change)="onFileChange($event)" accept=".csv" id="csvFileInput" style="display: none;">
             <label for="csvFileInput" class="upload-csv-button">
