@@ -1,134 +1,141 @@
 html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1c3a4d;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  transition: transform 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
+    transform: translateX(-100%);
+    z-index: 1000;
+
+    &.open {
+      transform: translateX(0);
+    }
   }
-  
-  .dashboard-container {
-    display: flex;
-    height: 100vh;
+}
+
+.toggle-button {
+  display: none;
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 300px;
+  margin-top: -38px;
+
+  @media (max-width: 768px) {
+    display: block;
   }
-  
-  .sidebar {
-    width: 250px;
-    background-color: #1c3a4d;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100vh;
+}
+
+.close-button {
+  display: none;
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  align-self: flex-end;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
   }
-  
-  .user-info {
-    text-align: center;
-    margin-bottom: 20px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    padding-top: 60px;
   }
-  
-  .profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  .nav-links {
-    list-style-type: none;
-    padding: 0;
-    width: 100%;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .nav-links li {
-    margin: 15px 0;
-  }
-  
-  .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-  }
-  
-  .nav-links a img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  .logout-button {
-    background-color: #ff4d4d;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    // border-radius: 8px;
-    width: 251px;
-    margin-top: 41px;
-  }
-  
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .search-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .search-bar button {
-    background-color: #1c3a4d;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .form-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .form-group input {
-    width: 48%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .upload-csv-button,
-  .register-button {
-    background-color: #1c3a4d;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
+}
+
+.user-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.nav-links {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-links li {
+  margin: 15px 0;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.nav-links a img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 1101px;
+  margin-top: 41px;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}

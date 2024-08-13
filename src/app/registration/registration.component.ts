@@ -64,27 +64,26 @@ export class RegistrationComponent implements OnInit {
     return null;
   }
 
-  async onSubmit() {
+  onSubmit(): void {
     if (this.registrationForm.invalid) {
       console.log('Form is invalid:', this.registrationForm.errors);
       return; // If the form is invalid, do not submit
     }
 
     const { fullName, email, address, phoneNumber, brn, tin, password } = this.registrationForm.value;
-    const data = { fullName, email, address, phoneNumber, brn, tin, password };
 
-    console.log('Form Data:', data); // Add this line
-
-    try {
-      await this.mongoService.register(email, password, fullName, address, phoneNumber, brn, tin, data);
-      console.log('Registration successful');
-      this.router.navigateByUrl('');
-    } catch (error) {
-      console.error('Registration failed', error);
-    }
+    this.mongoService.register(fullName, email, address, phoneNumber, brn, tin, password).subscribe({
+      next: (response) => {
+        console.log('Registration successful', response);
+        this.router.navigateByUrl('');
+      },
+      error: (error) => {
+        console.error('Registration failed', error);
+      }
+    });
   }
 
-  openLoginPage() {
+  openLoginPage(): void {
     this.router.navigateByUrl('');
   }
 }

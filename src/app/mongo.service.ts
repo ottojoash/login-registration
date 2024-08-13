@@ -1,58 +1,94 @@
 import { Injectable } from '@angular/core';
-import * as Realm from 'realm-web';
-
-const app = new Realm.App({ id: 'voyance-ydubnnb' });
-// const app = new Realm.App({ id: 'application-0-xzxbpfo' });
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MongoService {
-  private mongodb: any = null;
 
-  constructor() {
-    if (app.currentUser) {
-      this.mongodb = app.currentUser.mongoClient('mongodb-atlas').db('voyance');
-    }
+  private apiUrl = 'http://localhost:5000/api'; // Adjust the base URL as needed
+
+  constructor(private http: HttpClient) { }
+
+  register(fullName: string, email: string, address: string, phoneNumber: string, brn: string, tin: string, password: string): Observable<any> {
+    const registerData = { fullName, email, address, phoneNumber, brn, tin, password };
+    return this.http.post(`${this.apiUrl}/auth/register`, registerData).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  private initializeMongoDB() {
-    if (app.currentUser) {
-      this.mongodb = app.currentUser.mongoClient('mongodb-atlas').db('voyance');
-    }
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
+      tap((response: { token: string; }) => {
+        // Save the token to local storage
+        localStorage.setItem('token', response.token);
+      }),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
   }
 
-  async login(email: string, password: string) {
-    const credentials = Realm.Credentials.emailPassword(email, password);
-    const user = await app.logIn(credentials);
-    if (user) {
-      this.initializeMongoDB();
-    }
-    return user;
+  addGadget(gadget: any): Promise<any> {
+    const token = localStorage.getItem('token'); // Adjust token retrieval as needed
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(`${this.apiUrl}/gadgets/register`, gadget, { headers })
+      .toPromise()
+      .catch(this.handleError);
   }
 
-  async register(email: string, password: string, fullName: string, address: string, phoneNumber: string, brn: string, tin: string, data: { email: string; password: string; fullName: any; address: any; phoneNumber: any; brn: any; tin: any; }) {
-    await app.emailPasswordAuth.registerUser({ email, password });
-    if (!this.mongodb) {
-      this.initializeMongoDB();
-    }
-    const collection = this.mongodb.collection('users');
-    await collection.insertOne(data);
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token'); // Check if token exists in local storage
   }
 
-  async getUser() {
-    return app.currentUser;
+  getUser(): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiUrl}/auth/current-user`, { headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  async logout() {
-    await app.currentUser?.logOut();
-    this.mongodb = null;
+   // Method to upload CSV
+   uploadCSV(file: File): Promise<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiUrl}/upload-csv`, formData, { headers })
+      .toPromise()
+      .catch(this.handleError);
   }
 
-  async getCollection(collectionName: string) {
-    if (!this.mongodb) {
-      throw new Error('No MongoDB client available. Make sure you are logged in.');
-    }
-    return this.mongodb.collection(collectionName);
+  // Updated addGadget to include the owner field
+  addGadgetWithOwner(gadget: any): Promise<any> {
+    return this.getUser().toPromise().then((user: any) => {
+      console.log('Retrieved User:', user); // Debugging: Log the user data
+      if (user && user._id) {
+        gadget.owner = user._id; // Ensure the owner is correctly assigned
+        return this.addGadget(gadget);
+      } else {
+        throw new Error('User ID is missing');
+      }
+    }).catch(this.handleError);
   }
+  handleError(handleError: any): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  
 }

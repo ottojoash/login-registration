@@ -1,69 +1,84 @@
 <div class="transfer-ownership-container">
-    <h2>Transfer Ownership</h2>
-    <div class="tabs">
-      <button (click)="selectTab('batch')" [class.active]="selectedTab === 'batch'">Batch Selling</button>
-      <button (click)="selectTab('piece')" [class.active]="selectedTab === 'piece'">Piece Selling</button>
-    </div>
-  
-    <div *ngIf="selectedTab === 'batch'" class="tab-content">
-      <div class="table-container">
-        <table class="gadgets-table">
-          <thead>
-            <tr>
-              <th>Name/Brand</th>
-              <th>Type of Gadget</th>
-              <th>S/N</th>
-              <th>IMEI</th>
-              <th>Storage</th>
-              <th>RAM</th>
-              <th>Color</th>
-              <th>Year Make</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let gadget of gadgets">
-              <td>{{ gadget.name }}</td>
-              <td>{{ gadget.type }}</td>
-              <td>{{ gadget.sn }}</td>
-              <td>{{ gadget.imei }}</td>
-              <td>{{ gadget.storage }}</td>
-              <td>{{ gadget.ram }}</td>
-              <td>{{ gadget.color }}</td>
-              <td>{{ gadget.year }}</td>
-              <td>
-                <div class="action-buttons">
-                  <button class="action-button confirm-button"><i class="fas fa-check"></i> Confirm</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  
-    <div *ngIf="selectedTab === 'piece'" class="tab-content">
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <input type="text" placeholder="Name/Brand" [(ngModel)]="gadget.name" name="name">
-          <input type="text" placeholder="Type of Gadget" [(ngModel)]="gadget.type" name="type">
-        </div>
-        <div class="form-group">
-          <input type="text" placeholder="S/N" [(ngModel)]="gadget.sn" name="sn">
-          <input type="text" placeholder="IMEI" [(ngModel)]="gadget.imei" name="imei">
-        </div>
-        <div class="form-group">
-          <input type="text" placeholder="Storage" [(ngModel)]="gadget.storage" name="storage">
-          <input type="text" placeholder="RAM" [(ngModel)]="gadget.ram" name="ram">
-        </div>
-        <div class="form-group">
-          <input type="text" placeholder="Color" [(ngModel)]="gadget.color" name="color">
-          <input type="text" placeholder="Year Make" [(ngModel)]="gadget.year" name="year">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="confirm-button"><i class="fas fa-check"></i> Confirm</button>
-        </div>
-      </form>
+  <h2>Transfer Ownership</h2>
+  <div class="tabs">
+    <button (click)="selectTab('batch')" [class.active]="selectedTab === 'batch'">Batch Selling</button>
+    <button (click)="selectTab('piece')" [class.active]="selectedTab === 'piece'">Piece Selling</button>
+  </div>
+
+  <div *ngIf="selectedTab === 'batch'" class="tab-content">
+    <div class="table-container">
+      <table class="gadgets-table">
+        <thead>
+          <tr>
+            <th>Name/Brand</th>
+            <th>Type of Gadget</th>
+            <th>S/N</th>
+            <th>IMEI</th>
+            <th>Storage</th>
+            <th>RAM</th>
+            <th>Color</th>
+            <th>Year Make</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let gadget of gadgets">
+            <td>{{ gadget.name }}</td>
+            <td>{{ gadget.type }}</td>
+            <td>{{ gadget.sn }}</td>
+            <td>{{ gadget.imei }}</td>
+            <td>{{ gadget.storage }}</td>
+            <td>{{ gadget.ram }}</td>
+            <td>{{ gadget.color }}</td>
+            <td>{{ gadget.year }}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-button confirm-button"><i class="fas fa-check"></i> Confirm</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+
+  <div *ngIf="selectedTab === 'piece'" class="tab-content">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search gadget"
+        class="search-bar"
+        (input)="onSearchInput($event)"
+      />
+      <div *ngIf="gadgetList.length > 0" class="gadget-dropdown">
+        <ul>
+          <li *ngFor="let gadget of gadgetList" (click)="selectGadget(gadget)">
+            {{ gadget.model }} - {{ gadget.brand }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="text" placeholder="Name/Brand" [(ngModel)]="gadget.name" name="name" required>
+        <input type="text" placeholder="Type of Gadget" [(ngModel)]="gadget.type" name="type" required>
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="S/N" [(ngModel)]="gadget.sn" name="sn" required>
+        <input type="text" placeholder="IMEI" [(ngModel)]="gadget.imei" name="imei" required>
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Storage" [(ngModel)]="gadget.storage" name="storage">
+        <input type="text" placeholder="RAM" [(ngModel)]="gadget.ram" name="ram">
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Color" [(ngModel)]="gadget.color" name="color">
+        <input type="text" placeholder="Year Make" [(ngModel)]="gadget.year" name="year">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="confirm-button"><i class="fas fa-check"></i> Confirm</button>
+      </div>
+    </form>
+  </div>
+</div>

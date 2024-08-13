@@ -1,79 +1,172 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .table-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-  }
-  
-  .search-container {
-    margin-bottom: 20px;
-  }
-  
-  .search-container input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .gadgets-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .gadgets-table th, .gadgets-table td {
-    padding: 12px 15px;
-    text-align: left;
-  }
-  
-  .gadgets-table th {
-    background-color: #A69CAC;
-    color: #fff;
-  }
-  
-  .gadgets-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .gadgets-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .action-button {
-    background-color: #1c3a4d;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .action-button i {
-    pointer-events: none;
-  }
-  
-  .edit-button:hover {
-    background-color: #155076;
-  }
-  
-  .delete-button:hover {
-    background-color: #d9534f;
-  }
-  
+.relative {
+  position: relative;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0); /* Make shadow transparent */
+}
+
+.sm\\:rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.dark\\:bg-gray-900 {
+  background-color: #1a202c;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+input[type="text"] {
+  padding-top: 0.5rem;
+  padding-left: 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  width: 100%;
+  max-width: 300px; /* Adjust max-width to fit better */
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+input[type="text"]::placeholder {
+  color: #9ca3af;
+}
+
+input[type="text"]:focus {
+  outline: 2px solid #3b82f6;
+}
+
+.tabs {
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.tab-button {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-size: 0.875rem; /* Smaller font size for tab buttons */
+}
+
+.tab-button.active {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.text-sm {
+  font-size: 0.75rem; /* Smaller text size for the table */
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.dark\\:text-gray-400 {
+  color: #9ca3af;
+}
+
+.text-gray-700 {
+  color: #374151;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.dark\\:bg-gray-700 {
+  background-color: #374151;
+}
+
+.border-b {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.border-transparent {
+  border-color: transparent; /* Make border transparent */
+}
+
+.hover\\:bg-gray-50:hover {
+  background-color: #f9fafb;
+}
+
+.dark\\:hover\\:bg-gray-600:hover {
+  background-color: #4b5563;
+}
+
+.p-4 {
+  padding: 0.5rem; /* Reduced padding to make the table smaller */
+}
+
+.px-6 {
+  padding-left: 1rem; /* Reduced padding */
+  padding-right: 1rem; /* Reduced padding */
+}
+
+.py-3 {
+  padding-top: 0.5rem; /* Reduced padding */
+  padding-bottom: 0.5rem; /* Reduced padding */
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem; /* Smaller font size for action buttons */
+}
+
+a {
+  color: #3b82f6;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.dark\\:text-blue-500 {
+  color: #60a5fa;
+}
+
+/* New styles for model name and checkboxes */
+.text-gray-900 {
+  color: #000000; /* Change model name color to black */
+}
+
+input[type="checkbox"] {
+  accent-color: #ffffff; /* Change checkbox color to white */
+}

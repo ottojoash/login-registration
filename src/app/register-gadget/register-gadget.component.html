@@ -7,37 +7,53 @@
         <button class="tab-button" [ngClass]="{'active': selectedTab === 'phone'}" (click)="selectTab('phone')">Phone</button>
       </div>
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <input type="text" formControlName="model" placeholder="Gadget model">
+        <div class="form-group" *ngIf="selectedTab === 'laptop'">
+          <input type="text" formControlName="model" placeholder="Model">
+          <input type="text" formControlName="deviceId" placeholder="Device ID"> <!-- Device ID for laptops -->
+        </div>
+        <div class="form-group" *ngIf="selectedTab === 'phone'">
+          <input type="text" formControlName="model" placeholder="Model">
           <input type="text" formControlName="imei" placeholder="IMEI">
         </div>
+        <div class="form-group" *ngIf="selectedTab === 'phone'">
+          <input type="text" formControlName="simType" placeholder="SIM Type">
+          <input type="text" formControlName="network" placeholder="Network Type">
+        </div>
         <div class="form-group">
-          <input type="text" formControlName="brand" placeholder="Gadget brand">
+          <input type="text" formControlName="brand" placeholder="Brand">
           <input type="text" formControlName="serialNumber" placeholder="Serial Number">
         </div>
         <div class="form-group">
-          <input type="text" formControlName="color" placeholder="Gadget color">
+          <input type="text" formControlName="color" placeholder="Color">
           <input type="text" formControlName="description" placeholder="Description">
         </div>
         <div class="form-group">
           <input type="text" formControlName="purchaseLocation" placeholder="Purchase location">
-          <input type="text" formControlName="registrationDate" placeholder="Date of registration">
+          <input type="date" formControlName="registrationDate" placeholder="Date of registration">
         </div>
         <div class="form-group" *ngIf="selectedTab === 'laptop'">
           <input type="text" formControlName="storageSize" placeholder="Storage size">
-          <input type="text" formControlName="simType" placeholder="SIM type">
+          <input type="text" formControlName="ram" placeholder="RAM">
         </div>
         <div class="form-group" *ngIf="selectedTab === 'phone'">
           <input type="text" formControlName="phoneNumber" placeholder="Phone number">
-          <input type="text" formControlName="network" placeholder="Network">
+          <input type="text" formControlName="storageSize" placeholder="Storage size">
         </div>
         <div class="form-group buttons">
-          <button type="button" (click)="uploadCSV()" class="upload-csv-button">
-            <img src="assets/upload.svg" alt="Upload Icon"> Upload csv
-          </button>
+          <div class="upload-container">
+            <input type="file" (change)="onFileChange($event)" accept=".csv" id="csvFileInput" style="display: none;">
+            <label for="csvFileInput" class="upload-csv-button">
+              <img src="assets/upload.svg" alt="Upload Icon"> Upload CSV
+            </label>
+          </div>
           <button type="submit" class="register-button">Register</button>
         </div>
       </form>
     </div>
   </div>
+</div>
+
+<!-- Notification Popup -->
+<div class="notification-popup" *ngIf="notificationVisible">
+  <p>{{ notificationMessage }}</p>
 </div>

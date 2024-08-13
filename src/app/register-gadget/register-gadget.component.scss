@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
+  background-color: #f0f2f5; /* Light gray background */
 }
 
 .dashboard-container {
@@ -9,20 +10,18 @@ html, body {
   height: 95vh;
   justify-content: center;
   align-items: center;
-  background-color: #f0f2f5;
+  @media (max-width: 768px) {
+    height: 78vh;
+  }
 }
 
 .main-content {
-  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 900px;
   width: 100%;
-}
-
-.form-container {
-  padding: 20px;
+  background: transparent; /* White background for the main content */
+  box-shadow: transparent; /* Added box shadow for better separation */
 }
 
 h2 {
@@ -31,9 +30,10 @@ h2 {
 }
 
 .tabs {
-  display: flex;
+  display: block; /* Enable flexbox layout */
   justify-content: space-around;
   margin-bottom: 20px;
+  margin-left: 20px;
 }
 
 .tab-button {
@@ -41,9 +41,10 @@ h2 {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 0px; /* Rounded corners for tabs */
   width: 48%;
   text-align: center;
+  // margin-left: 10px;
 }
 
 .tab-button.active {
@@ -53,19 +54,25 @@ h2 {
 
 .form-group {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   margin-bottom: 10px;
+}
 
-  input {
-    width: 48%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+.form-group input {
+  width: calc(50% - 10px);
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group input:nth-child(even) {
+  margin-right: 0; /* Remove right margin for even inputs */
 }
 
 .form-group.buttons {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -85,4 +92,17 @@ h2 {
   width: 20px;
   height: 20px;
   margin-right: 10px;
+}
+
+.notification-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4b2e83;
+  color: #ffffff;
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
