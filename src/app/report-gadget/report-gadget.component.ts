@@ -42,14 +42,13 @@ export class ReportGadgetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // If you want the gadgetIdentifier to be auto-filled based on the selected gadget
     this.reportForm.get('gadgetIdentifier')?.valueChanges.subscribe(value => {
       this.searchInput$.next(value);
     });
   }
 
   getAuthHeaders() {
-    const token = localStorage.getItem('authToken'); // Adjust if you're using a different storage mechanism
+    const token = localStorage.getItem('authToken');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -66,12 +65,12 @@ export class ReportGadgetComponent implements OnInit {
 
   selectGadget(gadget: any) {
     this.reportForm.patchValue({
-      gadgetIdentifier: gadget.serialNumber, // Assuming `serialNumber` is the field name
+      gadgetIdentifier: gadget.serialNumber,
       gadgetName: gadget.model,
       gadgetBrand: gadget.brand,
       gadgetColor: gadget.color
     });
-    this.gadgetList = []; // Clear the dropdown after selection
+    this.gadgetList = [];
   }
 
   onSearchInput(event: Event) {
@@ -80,6 +79,7 @@ export class ReportGadgetComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.reportForm.value); // Log form values
     if (this.reportForm.valid) {
       this.http.post('http://localhost:5000/api/reports/report', this.reportForm.getRawValue(), {
         headers: this.getAuthHeaders()
@@ -95,6 +95,7 @@ export class ReportGadgetComponent implements OnInit {
         }
       );
     } else {
+      console.log(this.reportForm.errors); // Log form errors
       alert('Please fill in all required fields');
     }
   }
