@@ -11,20 +11,22 @@ export class RegisterGadgetComponent implements OnInit {
   registerForm: FormGroup;
   selectedTab: string = 'laptop';  // Default tab
   notificationVisible: boolean = false;
-  notificationMessage!: string;
+  notificationMessage: string = ''; // Initialize with an empty string
   selectedFile: File | null = null; // Store the selected file
 
   constructor(private fb: FormBuilder, private mongoService: MongoService) {
     this.registerForm = this.fb.group({
       model: ['', Validators.required],
       imei: [''],
+      deviceId: [''],  // Initialize deviceId
+      ram: [''],  // Initialize ram
       brand: ['', Validators.required],
       serialNumber: ['', Validators.required],
       color: [''],
       description: ['', Validators.required],
       purchaseLocation: ['', Validators.required],
       registrationDate: ['', Validators.required],
-      storageSize: [''],
+      storageSize: ['', Validators.required],
       simType: [''],
       phoneNumber: [''],
       network: [''],
@@ -54,8 +56,19 @@ export class RegisterGadgetComponent implements OnInit {
         this.selectTab(this.selectedTab);
       }).catch(error => {
         console.error('Error registering gadget:', error);
-        alert('Error registering gadget');
+        this.notificationMessage = 'Error registering gadget';
+        this.notificationVisible = true;
+        setTimeout(() => {
+          this.notificationVisible = false;
+        }, 3000);
       });
+    } else {
+      console.log('Form is invalid');
+      this.notificationMessage = 'Please fill out all required fields';
+      this.notificationVisible = true;
+      setTimeout(() => {
+        this.notificationVisible = false;
+      }, 3000);
     }
   }
   
@@ -80,7 +93,11 @@ export class RegisterGadgetComponent implements OnInit {
         }, 3000);
       }).catch(error => {
         console.error('Error uploading CSV:', error);
-        alert('Error uploading CSV');
+        this.notificationMessage = 'Error uploading CSV';
+        this.notificationVisible = true;
+        setTimeout(() => {
+          this.notificationVisible = false;
+        }, 3000);
       });
     }
   }
@@ -92,18 +109,23 @@ export class RegisterGadgetComponent implements OnInit {
     if (tab === 'laptop') {
       this.registerForm.controls['phoneNumber'].clearValidators();
       this.registerForm.controls['network'].clearValidators();
-      this.registerForm.controls['storageSize'].setValidators(Validators.required);
-      this.registerForm.controls['simType'].setValidators(Validators.required);
-    } else if (tab === 'phone') {
-      this.registerForm.controls['storageSize'].clearValidators();
+      this.registerForm.controls['ram'].setValidators(Validators.required); // RAM is required for laptops
+      this.registerForm.controls['deviceId'].setValidators(Validators.required); // Device ID is required for laptops
       this.registerForm.controls['simType'].clearValidators();
-      this.registerForm.controls['phoneNumber'].setValidators(Validators.required);
-      this.registerForm.controls['network'].setValidators(Validators.required);
+    } else if (tab === 'phone') {
+      this.registerForm.controls['ram'].clearValidators();
+      this.registerForm.controls['deviceId'].clearValidators();
+      this.registerForm.controls['phoneNumber'].setValidators(Validators.required); // Phone number is required for phones
+      this.registerForm.controls['network'].setValidators(Validators.required); // Network is required for phones
+      this.registerForm.controls['simType'].setValidators(Validators.required); // SIM Type is required for phones
     }
 
+    // Update validity based on the selected tab
     this.registerForm.controls['phoneNumber'].updateValueAndValidity();
     this.registerForm.controls['network'].updateValueAndValidity();
     this.registerForm.controls['storageSize'].updateValueAndValidity();
     this.registerForm.controls['simType'].updateValueAndValidity();
+    this.registerForm.controls['ram'].updateValueAndValidity();
+    this.registerForm.controls['deviceId'].updateValueAndValidity();
   }
 }

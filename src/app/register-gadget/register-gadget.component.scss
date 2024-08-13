@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f0f2f5; // Light gray background
+  background-color: #f0f2f5; /* Light gray background */
 }
 
 .dashboard-container {
@@ -14,15 +14,11 @@ html, body {
 
 .main-content {
   border-radius: 8px;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 900px;
   width: 100%;
-  background: transparent; // Transparent white background
-}
-
-.form-container {
-  padding: 20px;
+  background: transparent; /* White background for the main content */
+  box-shadow: transparent; /* Added box shadow for better separation */
 }
 
 h2 {
@@ -31,10 +27,10 @@ h2 {
 }
 
 .tabs {
-  // display: flex;
+  display: block; /* Enable flexbox layout */
   justify-content: space-around;
   margin-bottom: 20px;
-  margin-left: 25px;
+  margin-left: 20px;
 }
 
 .tab-button {
@@ -42,9 +38,10 @@ h2 {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  border-radius: 0px;
+  border-radius: 0px; /* Rounded corners for tabs */
   width: 48%;
   text-align: center;
+  // margin-left: 10px;
 }
 
 .tab-button.active {
@@ -56,18 +53,18 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 10px;
+}
 
-  input {
-    width: calc(50% - 10px);
-    margin-right: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+.form-group input {
+  width: calc(50% - 10px);
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-  input:nth-child(even) {
-    margin-right: 0;
-  }
+.form-group input:nth-child(even) {
+  margin-right: 0; /* Remove right margin for even inputs */
 }
 
 .form-group.buttons {

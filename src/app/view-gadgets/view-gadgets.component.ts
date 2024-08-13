@@ -9,6 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ViewGadgetsComponent implements OnInit {
   searchQuery: string = '';
   gadgets: any[] = [];
+  filteredGadgetsList: any[] = [];
+  selectedTab: string = 'laptop'; // Default tab
   private token: string = ''; // Assume token is retrieved and set from a service
 
   constructor(private http: HttpClient) { }
@@ -35,6 +37,10 @@ export class ViewGadgetsComponent implements OnInit {
       );
   }
 
+  selectTab(tab: string): void {
+    this.selectedTab = tab;
+  }
+
   filteredGadgets() {
     const query = this.searchQuery.toLowerCase();
     return this.gadgets.filter(gadget =>
@@ -46,6 +52,6 @@ export class ViewGadgetsComponent implements OnInit {
       (gadget.ram && gadget.ram.toLowerCase().includes(query)) ||
       (gadget.color && gadget.color.toLowerCase().includes(query)) ||
       (gadget.registrationDate && gadget.registrationDate.toLowerCase().includes(query))
-    );
+    ).filter(gadget => gadget.type === this.selectedTab);
   }
 }

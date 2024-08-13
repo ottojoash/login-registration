@@ -1,39 +1,102 @@
-<div class="table-container">
-  <h2>View Gadgets</h2>
-  <div class="search-container">
-    <input type="text" placeholder="Search gadgets..." [(ngModel)]="searchQuery">
-  </div>
-  <table class="gadgets-table">
-    <thead>
-      <tr>
-        <th>Model</th>
-        <th>Type of Gadget</th>
-        <th>S/N</th>
-        <th>IMEI</th>
-        <th>Storage</th>
-        <th>RAM</th>
-        <th>Color</th>
-        <th>Registration Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let gadget of filteredGadgets()">
-        <td>{{ gadget.model }}</td>
-        <td>{{ gadget.type }}</td>
-        <td>{{ gadget.serialNumber }}</td>
-        <td>{{ gadget.imei }}</td>
-        <td>{{ gadget.storageSize }}</td>
-        <td>{{ gadget.ram }}</td>
-        <td>{{ gadget.color }}</td>
-        <td>{{ gadget.registrationDate | date }}</td>
-        <td>
-          <div class="action-buttons">
-            <button class="action-button edit-button"><i class="fas fa-edit"></i></button>
-            <button class="action-button delete-button"><i class="fas fa-trash"></i></button>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg border-transparent">
+  <div class="pb-4 bg-white dark:bg-gray-900">
+      <label for="table-search" class="sr-only">Search</label>
+      <div class="relative mt-1">
+          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
           </div>
-        </td>
-      </tr>
-    </tbody>
+          <input type="text" id="table-search" [(ngModel)]="searchQuery" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full max-w-xs bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search gadgets...">
+      </div>
+  </div>
+
+  <div class="tabs mb-4">
+      <button class="tab-button" [ngClass]="{'active': selectedTab === 'laptop'}" (click)="selectTab('laptop')">Laptops</button>
+      <button class="tab-button" [ngClass]="{'active': selectedTab === 'phone'}" (click)="selectTab('phone')">Phones</button>
+  </div>
+
+  <table class="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="p-2">
+                  <div class="flex items-center">
+                      <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                  </div>
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  Model
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  Type of Gadget
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  S/N
+              </th>
+              <th scope="col" class="px-4 py-2" *ngIf="selectedTab === 'phone'">
+                  IMEI
+              </th>
+              <th scope="col" class="px-4 py-2" *ngIf="selectedTab === 'laptop'">
+                  DEVICE ID
+              </th>
+              <th scope="col" class="px-4 py-2" *ngIf="selectedTab === 'phone'">
+                  SIM Type
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  Storage
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  Color
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  Registration Date
+              </th>
+              <th scope="col" class="px-4 py-2">
+                  Actions
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let gadget of filteredGadgets(); let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td class="w-4 p-2">
+                  <div class="flex items-center">
+                      <input id="checkbox-table-search-{{i}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="checkbox-table-search-{{i}}" class="sr-only">checkbox</label>
+                  </div>
+              </td>
+              <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ gadget.model }}
+              </td>
+              <td class="px-4 py-2">
+                  {{ gadget.type }}
+              </td>
+              <td class="px-4 py-2">
+                  {{ gadget.serialNumber }}
+              </td>
+              <td *ngIf="selectedTab === 'phone'" class="px-4 py-2">
+                  {{ gadget.imei }}
+              </td>
+              <td *ngIf="selectedTab === 'laptop'" class="px-4 py-2">
+                  {{ gadget.deviceId }}
+              </td>
+              <td *ngIf="selectedTab === 'phone'" class="px-4 py-2">
+                  {{ gadget.simType }}
+              </td>
+              <td class="px-4 py-2">
+                  {{ gadget.storageSize }}
+              </td>
+              <td class="px-4 py-2">
+                  {{ gadget.color }}
+              </td>
+              <td class="px-4 py-2">
+                  {{ gadget.registrationDate }}
+              </td>
+              <td class="px-4 py-2 action-buttons">
+                  <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                  <!-- <a href="#" class="text-red-600 dark:text-red-500 hover:underline ms-4">Delete</a> -->
+              </td>
+          </tr>
+      </tbody>
   </table>
 </div>
