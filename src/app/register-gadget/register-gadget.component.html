@@ -8,74 +8,36 @@
       </div>
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group" *ngIf="selectedTab === 'laptop'">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="model" id="modelLaptop" class="form-control" placeholder="Model">
-            <label mdbLabel class="form-label" for="modelLaptop">Model</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="phoneNumber" id="deviceIDLaptop" class="form-control" placeholder="Device ID">
-            <label mdbLabel class="form-label" for="deviceIDLaptop">Device ID</label>
-          </mdb-form-control>
+          <input type="text" formControlName="model" placeholder="Model">
+          <input type="text" formControlName="phoneNumber" placeholder="Device ID">
         </div>
         <div class="form-group" *ngIf="selectedTab === 'phone'">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="model" id="modelPhone" class="form-control" placeholder="Model">
-            <label mdbLabel class="form-label" for="modelPhone">Model</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="imei" id="imeiPhone" class="form-control" placeholder="IMEI">
-            <label mdbLabel class="form-label" for="imeiPhone">IMEI</label>
-          </mdb-form-control>
+          <input type="text" formControlName="model" placeholder="Model">
+          <input type="text" formControlName="imei" placeholder="IMEI">
+        </div>
+        <!-- <div class="form-group">
+          <input type="text" formControlName="model" placeholder="Model">
+          <input type="text" formControlName="imei" placeholder="IMEI">
+        </div> -->
+        <div class="form-group">
+          <input type="text" formControlName="brand" placeholder="Brand">
+          <input type="text" formControlName="serialNumber" placeholder="Serial Number">
         </div>
         <div class="form-group">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="brand" id="brand" class="form-control" placeholder="Brand">
-            <label mdbLabel class="form-label" for="brand">Brand</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="serialNumber" id="serialNumber" class="form-control" placeholder="Serial Number">
-            <label mdbLabel class="form-label" for="serialNumber">Serial Number</label>
-          </mdb-form-control>
+          <input type="text" formControlName="color" placeholder="Color">
+          <input type="text" formControlName="description" placeholder="Description">
         </div>
         <div class="form-group">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="color" id="color" class="form-control" placeholder="Color">
-            <label mdbLabel class="form-label" for="color">Color</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="description" id="description" class="form-control" placeholder="Description">
-            <label mdbLabel class="form-label" for="description">Description</label>
-          </mdb-form-control>
-        </div>
-        <div class="form-group">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="purchaseLocation" id="purchaseLocation" class="form-control" placeholder="Purchase Location">
-            <label mdbLabel class="form-label" for="purchaseLocation">Purchase Location</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="date" formControlName="registrationDate" id="registrationDate" class="form-control">
-            <label mdbLabel class="form-label" for="registrationDate">Date of Registration</label>
-          </mdb-form-control>
+          <input type="text" formControlName="purchaseLocation" placeholder="Purchase location">
+          <input type="date" formControlName="registrationDate" placeholder="Date of registration">
         </div>
         <div class="form-group" *ngIf="selectedTab === 'laptop'">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="storageSize" id="storageSize" class="form-control" placeholder="Storage Size">
-            <label mdbLabel class="form-label" for="storageSize">Storage Size</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="simType" id="simTypeLaptop" class="form-control" placeholder="RAM">
-            <label mdbLabel class="form-label" for="simTypeLaptop">RAM</label>
-          </mdb-form-control>
+          <input type="text" formControlName="storageSize" placeholder="Storage size">
+          <input type="text" formControlName="simType" placeholder="RAM">
         </div>
         <div class="form-group" *ngIf="selectedTab === 'phone'">
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="phoneNumber" id="phoneNumber" class="form-control" placeholder="Phone Number">
-            <label mdbLabel class="form-label" for="phoneNumber">Phone Number</label>
-          </mdb-form-control>
-          <mdb-form-control>
-            <input mdbInput type="text" formControlName="network" id="network" class="form-control" placeholder="Sim Type">
-            <label mdbLabel class="form-label" for="network">Sim Type</label>
-          </mdb-form-control>
+          <input type="text" formControlName="phoneNumber" placeholder="Phone number">
+          <input type="text" formControlName="network" placeholder="Sim Type">
         </div>
         <div class="form-group buttons">
           <div class="upload-container">
