@@ -13,6 +13,8 @@ import { ViewGadgetsComponent } from './view-gadgets/view-gadgets.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     ReactiveFormsModule,  // Ensure this is added to imports
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MdbFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

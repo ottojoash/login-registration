@@ -10,6 +10,10 @@ html, body {
   height: 95vh;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: 74vh;
+  }
 }
 
 .main-content {

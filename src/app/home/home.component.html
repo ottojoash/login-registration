@@ -1,9 +1,9 @@
 <div class="dashboard-container">
-  <div class="sidebar">
+  <div class="sidebar" [class.open]="isSidebarOpen">
+    <button class="close-button" (click)="toggleSidebar()">&#10006;</button>
     <div class="user-info">
       <img src="assets/user.svg" alt="User Icon" class="profile-pic">
       <p>Welcome Back,<br><strong>{{ user.profile.name }}</strong></p>
-      <!-- <p><strong>{{ user.profile.email }}</strong></p> -->
     </div>
     <ul class="nav-links">
       <li><a routerLink="/home/register-gadget" routerLinkActive="active"><img src="assets/register.svg" alt="Register Icon"> Register gadget</a></li>
@@ -12,10 +12,11 @@
       <li><a routerLink="/home/transfer-ownership" routerLinkActive="active"><img src="assets/transfer.svg" alt="Transfer Icon"> Transfer Ownership</a></li>
       <li><a routerLink="/home/notifications" routerLinkActive="active"><img src="assets/notification.svg" alt="Notification Icon"> Notifications</a></li>
     </ul>
-    <button (click)="logout()" class="logout-button">log out</button>
+    <button (click)="logout()" class="logout-button">Log out</button>
   </div>
 
   <div class="main-content">
+    <button class="toggle-button" (click)="toggleSidebar()">&#9776;</button>
     <router-outlet></router-outlet>
   </div>
 </div>
