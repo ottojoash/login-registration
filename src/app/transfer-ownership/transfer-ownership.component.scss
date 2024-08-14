@@ -1,123 +1,182 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
+// General page styling
+.min-h-screen {
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+// Form container styling
+.form-container {
+  width: 100%;
+  max-width: 64rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// Page header styling
+.page-header {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #4a4a4a;
+  margin-bottom: 1.5rem;
+}
+
+// Search bar and button container styling
+.search-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar-wrapper {
+  position: relative; /* Ensure dropdown is positioned relative to this wrapper */
+  width: 100%;
+}
+
+.search-bar {
+  width: 100%; /* Adjust width to be full within the container */
+  max-width: 250px;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  &::placeholder {
+    color: #9ca3af;
   }
-  
-  .transfer-ownership-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-   
+
+  &:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
   }
-  
-  h2 {
-    margin-bottom: 20px;
+}
+
+// Dropdown for search results
+.dropdown {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute; /* Position the dropdown below the search input */
+  top: 100%; /* Align it below the search bar */
+  left: 0;
+  width: 100%; /* Ensure it matches the width of the search bar */
+  border: 1px solid #ccc;
+  border-radius: 0.375rem;
+  background-color: white;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure dropdown appears above other elements */
+}
+
+.dropdown li {
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
-  
-  .tabs {
-    display: flex;
-    margin-bottom: 20px;
-    border-radius: 8px;
+}
+
+// Action button styling
+.action-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: white;
+  background-color: #1d4ed8;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background-color: #1e40af;
   }
-  
-  .tabs button {
-    flex: 1;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background-color: #e0e0e0;
-    color: #333;
-    // border-radius: 8px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.5);
   }
-  
-  .tabs button.active {
-    background-color: #320A28;
-    color: #fff;
+}
+
+// Form table styling
+.form-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+  border-radius: 0.375rem;
+
+  td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 0.875rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+
+      &:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+      }
+    }
   }
-  
-  .tab-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
+}
+
+// Submit button styling
+.submit-container {
+  margin-top: 1rem;
+}
+
+.submit-button {
+  color: white;
+  background-color: #1d4ed8;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  text-align: center;
+
+  &:hover {
+    background-color: #1e40af;
   }
-  
-  .table-container {
-    width: 100%;
-    max-height: 340px;
-    overflow-y: auto;
-    // border: 1px solid #ccc;
-    margin-top: -20px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.5);
   }
-  
-  .gadgets-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .gadgets-table th, .gadgets-table td {
-    padding: 12px 15px;
-    text-align: left;
-  }
-  
-  .gadgets-table th {
-    background-color: #A69CAC;
-    color: #fff;
-  }
-  
-  .gadgets-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .gadgets-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-    
-  }
-  
-  .action-button {
-    background-color: #1c3a4d;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .action-button i {
-    pointer-events: none;
-    
-  }
-  .confirm-button{
-    border-radius: 8px;
-  }
-  
-  .confirm-button:hover {
-    background-color: #155076;
-    border-radius: 8px;
-  }
-  
-  .form-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .form-group input {
-    width: 48%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
+}
+
+// Autocomplete wrapper styling
+.autocomplete-wrapper {
+  position: relative; /* Ensure dropdown is positioned relative to this wrapper */
+}
+
+.autocomplete-wrapper input {
+  width: 100%; /* Adjust width to be full within the container */
+}
+
+.autocomplete-wrapper .dropdown {
+  top: calc(100% + 2px); /* Position dropdown just below the input field */
+}

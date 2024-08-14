@@ -1,6 +1,91 @@
-<div class="transfer-ownership-container">
-  <h2>Transfer Ownership</h2>
-  <div class="tabs">
-    <button (click)="selectTab('batch')" [class.active]="selectedTab === 'batch'">Batch Selling</button>
-    <button (click)="selectTab('piece')" [class.active]="selectedTab === 'piece'">Piece Selling</button>
+<div class="min-h-screen flex items-center justify-center bg-gray-50">
+  <div class="form-container">
+    <!-- Page Header -->
+    <h1 class="page-header">Transfer Gadget</h1>
+
+    <!-- Form Section -->
+    <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+      <!-- Search Bar and Button -->
+      <div class="search-bar-container">
+        <div class="search-bar-wrapper">
+          <input 
+            type="text" 
+            placeholder="Search" 
+            class="search-bar" 
+            (input)="onSearchInput($event)" 
+            [(ngModel)]="searchQuery"
+            name="searchQuery"
+          />
+
+          <!-- Dropdown for search results -->
+          <ul *ngIf="showGadgetList && gadgetList.length > 0" class="dropdown">
+            <li *ngFor="let gadget of gadgetList" (click)="selectGadget(gadget)">
+              {{ gadget.model }} - {{ gadget.serialNumber }}
+            </li>
+          </ul>
+        </div>
+
+        <button type="button" class="action-button">Batch Transfer</button>
+      </div>
+
+      <!-- Form Fields -->
+      <table class="form-table">
+        <tbody>
+          <!-- Gadget Information -->
+          <tr>
+            <td>
+              <input type="text" formControlName="gadgetModel" id="model" placeholder="Gadget Model" required />
+            </td>
+            <td>
+              <input type="text" formControlName="imei" id="imei" placeholder="IMEI" required />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" formControlName="serialNumber" id="serialNumber" placeholder="Serial Number" required />
+            </td>
+            <td>
+              <input type="text" formControlName="ownerId" id="ownerId" placeholder="Owner's ID" [attr.disabled]="true" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="tel" formControlName="ownerNumber" id="ownerNumber" placeholder="Owner's Number" [attr.disabled]="true" />
+            </td>
+            <td>
+              <input type="text" formControlName="storage" id="storageSize" placeholder="Storage" required />
+            </td>
+          </tr>
+          <!-- Transfer Details -->
+          <tr>
+            <td>
+              <div class="autocomplete-wrapper">
+                <input 
+                  type="text" 
+                  formControlName="transferTo" 
+                  id="transferTo" 
+                  placeholder="Transfer To (TIN/BRN)" 
+                  (input)="onTransferToInput($event)"
+                />
+                <!-- Dropdown for autocomplete -->
+                <ul *ngIf="showOwnerList && ownerList.length > 0" class="dropdown">
+                  <li *ngFor="let owner of ownerList" (click)="selectOwner(owner)">
+                    {{ owner.tin }} - {{ owner.name }}
+                  </li>
+                </ul>
+              </div>
+            </td>
+            <td>
+              <input type="text" formControlName="transferDetails" id="transferDetails" placeholder="Transfer Details" required />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Submit Button -->
+      <div class="submit-container">
+        <button type="submit" class="submit-button">Submit</button>
+      </div>
+    </form>
   </div>
+</div>
