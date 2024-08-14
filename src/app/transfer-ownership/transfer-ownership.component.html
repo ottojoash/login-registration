@@ -34,49 +34,53 @@
           <!-- Gadget Information -->
           <tr>
             <td>
-              <input type="text" formControlName="gadgetModel" id="model" placeholder="Gadget Model" required />
+              <input type="text" formControlName="gadgetType" id="gadgetType" placeholder="Gadget Type" required />
             </td>
             <td>
-              <input type="text" formControlName="imei" id="imei" placeholder="IMEI" required />
+              <input type="text" formControlName="gadgetModel" id="model" placeholder="Gadget Model" required />
             </td>
           </tr>
           <tr>
+            <td>
+              <input type="text" formControlName="imei" id="imei" placeholder="IMEI" />
+            </td>
             <td>
               <input type="text" formControlName="serialNumber" id="serialNumber" placeholder="Serial Number" required />
             </td>
+          </tr>
+          <tr>
             <td>
               <input type="text" formControlName="ownerId" id="ownerId" placeholder="Owner's ID" [attr.disabled]="true" />
             </td>
+            <td>
+              <input type="tel" formControlName="phoneNumber" id="phoneNumber" placeholder="Owner's Number" [attr.disabled]="true" />
+            </td>
           </tr>
           <tr>
-            <td>
-              <input type="tel" formControlName="ownerNumber" id="ownerNumber" placeholder="Owner's Number" [attr.disabled]="true" />
-            </td>
             <td>
               <input type="text" formControlName="storage" id="storageSize" placeholder="Storage" required />
             </td>
-          </tr>
-          <!-- Transfer Details -->
-          <tr>
-            <td>
-              <div class="autocomplete-wrapper">
-                <input 
-                  type="text" 
-                  formControlName="transferTo" 
-                  id="transferTo" 
-                  placeholder="Transfer To (TIN/BRN)" 
-                  (input)="onTransferToInput($event)"
-                />
-                <!-- Dropdown for autocomplete -->
-                <ul *ngIf="showOwnerList && ownerList.length > 0" class="dropdown">
-                  <li *ngFor="let owner of ownerList" (click)="selectOwner(owner)">
-                    {{ owner.tin }} - {{ owner.name }}
-                  </li>
-                </ul>
-              </div>
-            </td>
             <td>
               <input type="text" formControlName="transferDetails" id="transferDetails" placeholder="Transfer Details" required />
+            </td>
+          </tr>
+          <tr>
+            <td class="relative-dropdown">
+              <input 
+                type="text" 
+                formControlName="transferTo" 
+                id="transferTo" 
+                placeholder="Transfer To (TIN/BRN)" 
+                (input)="onTransferToInput($event)" 
+                required 
+              />
+
+              <!-- Dropdown for transferTo results -->
+              <ul *ngIf="showOwnerList && ownerList.length > 0" class="dropdown">
+                <li *ngFor="let owner of ownerList" (click)="selectOwner(owner)">
+                  {{ owner.brn }} - {{ owner.tin }}
+                </li>
+              </ul>
             </td>
           </tr>
         </tbody>

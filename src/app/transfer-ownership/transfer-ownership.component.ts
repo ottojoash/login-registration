@@ -25,13 +25,13 @@ export class TransferOwnershipComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.transferForm = this.fb.group({
-      gadgetIdentifier: ['', Validators.required],
+      gadgetType: ['', Validators.required],
       gadgetModel: [''],
       imei: [''],
-      serialNumber: [''],
-      ownerId: [{ value: '', disabled: true }, Validators.required],
-      ownerNumber: [{ value: '', disabled: true }],
-      storage: [''],
+      serialNumber: ['', Validators.required],
+      ownerId: [{ value: '', disabled: true }, Validators.required], // Disabled
+      phoneNumber: [{ value: '', disabled: true }], // Disabled
+      storage: ['', Validators.required],
       transferTo: ['', Validators.required],
       transferDetails: ['', Validators.required]
     });
@@ -51,7 +51,7 @@ export class TransferOwnershipComponent implements OnInit {
         this.showGadgetList = true; // Show gadget list
       });
 
-    // Handle search input for owners
+    // Handle search input for transferTo (owners)
     this.transferToInput$
       .pipe(
         debounceTime(300),
@@ -82,13 +82,17 @@ export class TransferOwnershipComponent implements OnInit {
   setInitialOwnerDetails() {
     const token = localStorage.getItem('authToken');
     if (token) {
-      const tokenData = JSON.parse(atob(token.split('.')[1])); // Decode token payload
-      const { ownerId, ownerNumber } = tokenData; // Extract necessary fields
+      try {
+        const tokenData = JSON.parse(atob(token.split('.')[1])); // Decode token payload
+        const { phoneNumber, tin, brn } = tokenData; // Extract necessary fields
 
-      this.transferForm.patchValue({
-        ownerId,
-        ownerNumber
-      });
+        this.transferForm.patchValue({
+          phoneNumber, // Set phone number field
+          ownerId: tin || brn // Set TIN or BRN; choose the non-empty value
+        });
+      } catch (error) {
+        console.error('Error decoding token', error);
+      }
     }
   }
 
@@ -119,6 +123,7 @@ export class TransferOwnershipComponent implements OnInit {
 
   selectGadget(gadget: any) {
     this.transferForm.patchValue({
+      gadgetType: gadget.type, // Set gadget type
       gadgetModel: gadget.model,
       imei: gadget.imei,
       serialNumber: gadget.serialNumber,
@@ -137,6 +142,7 @@ export class TransferOwnershipComponent implements OnInit {
     this.showOwnerList = false; // Hide owner list
     this.cdr.detectChanges(); // Trigger change detection
   }
+  
 
   onSearchInput(event: Event) {
     const input = event.target as HTMLInputElement;
