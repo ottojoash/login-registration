@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Subject, of } from 'rxjs';
@@ -12,17 +12,13 @@ import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 export class TransferOwnershipComponent implements OnInit {
   transferForm: FormGroup;
   searchInput$ = new Subject<string>();
-  transferToInput$ = new Subject<string>();
   gadgetList: any[] = [];
-  ownerList: any[] = [];
   showGadgetList: boolean = false; // Visibility for gadget dropdown
-  showOwnerList: boolean = false; // Visibility for owner dropdown
   searchQuery: any;
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private http: HttpClient
   ) {
     this.transferForm = this.fb.group({
       gadgetType: ['', Validators.required],
@@ -50,32 +46,13 @@ export class TransferOwnershipComponent implements OnInit {
         this.gadgetList = data;
         this.showGadgetList = true; // Show gadget list
       });
-
-    // Handle search input for transferTo (owners)
-    this.transferToInput$
-      .pipe(
-        debounceTime(300),
-        switchMap(value => this.fetchOwners(value)),
-        catchError(error => {
-          console.error(error);
-          return of([]);
-        })
-      )
-      .subscribe(data => {
-        this.ownerList = data;
-        this.showOwnerList = true; // Show owner list
-      });
   }
 
   ngOnInit(): void {
     this.setInitialOwnerDetails();
 
-    this.transferForm.get('gadgetIdentifier')?.valueChanges.subscribe(value => {
+    this.transferForm.get('gadgetType')?.valueChanges.subscribe(value => {
       this.searchInput$.next(value);
-    });
-
-    this.transferForm.get('transferTo')?.valueChanges.subscribe(value => {
-      this.transferToInput$.next(value);
     });
   }
 
@@ -112,51 +89,26 @@ export class TransferOwnershipComponent implements OnInit {
     });
   }
 
-  fetchOwners(query: string) {
-    if (!query) {
-      return of([]);
-    }
-    return this.http.get<any[]>(`http://localhost:5000/api/auth/search-users?query=${query}`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
   selectGadget(gadget: any) {
     this.transferForm.patchValue({
-      gadgetType: gadget.type, // Set gadget type
-      gadgetModel: gadget.model,
-      imei: gadget.imei,
-      serialNumber: gadget.serialNumber,
-      storage: gadget.storageSize
+        gadgetType: gadget.type,
+        gadgetModel: gadget.model,
+        imei: gadget.imei,
+        serialNumber: gadget.serialNumber,
+        storage: gadget.storageSize
     });
-    this.gadgetList = []; // Clear gadget list after selection
-    this.showGadgetList = false; // Hide gadget list
-    this.cdr.detectChanges(); // Trigger change detection
+    this.gadgetList = [];
+    this.showGadgetList = false;
   }
-
-  selectOwner(owner: any) {
-    this.transferForm.patchValue({
-      transferTo: owner.tin // Assuming transferTo corresponds to TIN
-    });
-    this.ownerList = []; // Clear owner list after selection
-    this.showOwnerList = false; // Hide owner list
-    this.cdr.detectChanges(); // Trigger change detection
-  }
-  
 
   onSearchInput(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchInput$.next(input.value);
   }
 
-  onTransferToInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.transferToInput$.next(input.value);
-  }
-
   onSubmit() {
     if (this.transferForm.valid) {
-      this.http.post('http://localhost:5000/api/transfer/piece', this.transferForm.getRawValue(), {
+      this.http.put('http://localhost:5000/api/transfer/piece', this.transferForm.getRawValue(), {
         headers: this.getAuthHeaders()
       })
       .subscribe(

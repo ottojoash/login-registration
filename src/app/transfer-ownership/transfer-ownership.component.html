@@ -65,22 +65,14 @@
             </td>
           </tr>
           <tr>
-            <td class="relative-dropdown">
+            <td>
               <input 
                 type="text" 
                 formControlName="transferTo" 
                 id="transferTo" 
                 placeholder="Transfer To (TIN/BRN)" 
-                (input)="onTransferToInput($event)" 
                 required 
               />
-
-              <!-- Dropdown for transferTo results -->
-              <ul *ngIf="showOwnerList && ownerList.length > 0" class="dropdown">
-                <li *ngFor="let owner of ownerList" (click)="selectOwner(owner)">
-                  {{ owner.brn }} - {{ owner.tin }}
-                </li>
-              </ul>
             </td>
           </tr>
         </tbody>
