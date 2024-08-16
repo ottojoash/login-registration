@@ -12,12 +12,23 @@ export class MongoService {
 
   constructor(private http: HttpClient) { }
 
-  register(fullName: string, email: string, address: string, phoneNumber: string, brn: string, tin: string, password: string): Observable<any> {
-    const registerData = { fullName, email, address, phoneNumber, brn, tin, password };
+  register(registerData: {
+    fullName: string;
+    email: string;
+    address: string;
+    phoneNumber: string;
+    brn: string;
+    tin: string;
+    password: string;
+    category: string; // Added category parameter
+  }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/register`, registerData).pipe(
       catchError(this.handleError)
     );
   }
+
+
+
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password }).pipe(

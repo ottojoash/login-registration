@@ -4,75 +4,75 @@
   align-items: center;
   height: 100vh;
   background-color: #f0f2f5;
-  border: 2px solid #dcdcdc;
-  border-radius: 8px;
   padding: 20px;
-  
+}
 
-  .register-content {
-    display: flex;
-    width: 80%;
-    max-width: 900px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
+.register-content {
+  display: flex;
+  width: 70%;
+  max-width: 800px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 98vh;
+}
 
-    .register-left {
-      flex: 1;
-      background-color: #e8e8e8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-    }
+.register-left {
+  flex: 1;
+  background-color: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Reduced padding */
+}
 
-    .register-right {
-      flex: 1;
-      padding: 40px;
+.register-left img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
 
-      h2 {
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
-        color: #333333;
-      }
+.register-right {
+  flex: 1;
+  padding: 15px; /* Reduced padding */
+}
 
-      .form-group {
-        margin-bottom: 1.5rem;
+.register-right h2 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem; /* Reduced font size */
+  color: #333333;
+}
 
-        input {
-          width: 100%;
-          padding: 0.75rem;
-          border: 1px solid #dcdcdc;
-          border-radius: 4px;
-          font-size: 1rem;
-          margin-bottom: 0.5rem;
-        }
+.form-group {
+  margin-bottom: 0.75rem; /* Reduced margin */
+}
 
-        .txt-error {
-          color: #ff0000;
-          font-size: 0.875rem;
-        }
-      }
+.form-group input {
+  width: 100%;
+  padding: 0.5rem; /* Reduced padding */
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  font-size: 0.9rem; /* Reduced font size */
+}
 
-      .btn-primary {
-        width: 100%;
-        background-color: #f39c12;
-        color: #ffffff;
-        border: none;
-        padding: 0.75rem;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s;
+.txt-error {
+  color: #ff0000;
+  font-size: 0.75rem; /* Reduced font size */
+}
 
-        &:hover {
-          background-color: #e67e22;
-        }
-      }
-    }
-  }
+.btn-primary {
+  width: 100%;
+  background-color: #f39c12;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem; /* Reduced padding */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #e67e22;
 }

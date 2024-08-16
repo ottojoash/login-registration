@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
     private mongoService: MongoService
   ) { 
     this.registrationForm = this.fb.group({
-      fullName: ['', Validators.required],
+      fullName: ['', Validators.required], // Ensure fullName is always required
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
       phoneNumber: ['', Validators.required],
@@ -39,20 +39,23 @@ export class RegistrationComponent implements OnInit {
   }
 
   adjustFormFields(): void {
-    if (this.selectedCategory === 'Individual') {
-      this.registrationForm.controls['fullName'].clearValidators();
+    const isIndividual = this.selectedCategory === 'Individual';
+    
+    // Adjust other fields based on the selected category
+    if (isIndividual) {
       this.registrationForm.controls['brn'].clearValidators();
       this.registrationForm.controls['tin'].setValidators([Validators.required]);
     } else {
-      this.registrationForm.controls['fullName'].setValidators([Validators.required]);
       this.registrationForm.controls['brn'].setValidators([Validators.required]);
       this.registrationForm.controls['tin'].clearValidators();
     }
-    this.registrationForm.controls['fullName'].updateValueAndValidity();
+
+    // Update the value and validity of the controls
+    this.registrationForm.controls['fullName'].updateValueAndValidity(); // Full name is always required
     this.registrationForm.controls['brn'].updateValueAndValidity();
     this.registrationForm.controls['tin'].updateValueAndValidity();
   }
-
+  
   passwordMatchValidator(control: AbstractControl) {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -67,12 +70,22 @@ export class RegistrationComponent implements OnInit {
   onSubmit(): void {
     if (this.registrationForm.invalid) {
       console.log('Form is invalid:', this.registrationForm.errors);
-      return; // If the form is invalid, do not submit
+      console.log('Form Controls:', this.registrationForm.controls);
+      return;
     }
-
+  
     const { fullName, email, address, phoneNumber, brn, tin, password } = this.registrationForm.value;
-
-    this.mongoService.register(fullName, email, address, phoneNumber, brn, tin, password).subscribe({
+    
+    if (!this.selectedCategory) {
+      console.error('Category is required');
+      return;
+    }
+  
+    const formData = { fullName, email, address, phoneNumber, brn, tin, password, category: this.selectedCategory };
+  
+    console.log('Form Data:', formData); // Log the data being sent
+  
+    this.mongoService.register(formData).subscribe({
       next: (response) => {
         console.log('Registration successful', response);
         this.router.navigateByUrl('');
@@ -82,6 +95,7 @@ export class RegistrationComponent implements OnInit {
       }
     });
   }
+  
 
   openLoginPage(): void {
     this.router.navigateByUrl('');

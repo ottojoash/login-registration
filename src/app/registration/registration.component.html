@@ -7,7 +7,8 @@
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="form-signin register-form">
         <h2 class="txt-color-mg">Sign Up</h2>
 
-        <div class="form-group" *ngIf="selectedCategory !== 'Individual'">
+        <!-- Full Name Field -->
+        <div class="form-group">
           <input type="text" id="fullName" formControlName="fullName" class="form-control" placeholder="Full Name">
           <div *ngIf="registrationForm.controls['fullName'].invalid && (registrationForm.controls['fullName'].dirty || registrationForm.controls['fullName'].touched)" class="txt-error">
             Full Name is required.
@@ -40,12 +41,20 @@
           </div>
         </div>
 
+        <!-- BRN Field -->
         <div class="form-group" *ngIf="selectedCategory !== 'Individual'">
           <input type="text" id="brn" formControlName="brn" class="form-control" placeholder="BRN">
+          <div *ngIf="registrationForm.controls['brn'].invalid && (registrationForm.controls['brn'].dirty || registrationForm.controls['brn'].touched)" class="txt-error">
+            BRN is required.
+          </div>
         </div>
 
+        <!-- TIN Field -->
         <div class="form-group">
           <input type="text" id="tin" formControlName="tin" class="form-control" placeholder="TIN">
+          <div *ngIf="registrationForm.controls['tin'].invalid && (registrationForm.controls['tin'].dirty || registrationForm.controls['tin'].touched)" class="txt-error">
+            TIN is required.
+          </div>
         </div>
 
         <div class="form-group">
