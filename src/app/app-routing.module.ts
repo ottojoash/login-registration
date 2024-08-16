@@ -8,6 +8,7 @@ import { ViewGadgetsComponent } from './view-gadgets/view-gadgets.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CategorySelectionComponent } from './category-selection/category-selection.component';
+import { BatchUploadComponent } from './batch-upload/batch-upload.component';
 
 const routes: Routes = [
   { path: '', component: CategorySelectionComponent },
@@ -22,7 +23,9 @@ const routes: Routes = [
       { path: 'report-gadget', component: ReportGadgetComponent },
       { path: 'view-gadgets', component: ViewGadgetsComponent },
       { path: 'transfer-ownership', component: TransferOwnershipComponent },
-      { path: 'notifications', component: NotificationsComponent }
+      { path: 'notifications', component: NotificationsComponent },
+      { path: 'batch-upload', component: BatchUploadComponent }, // Add route for batch upload
+
     ]
   }
 ];

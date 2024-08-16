@@ -1,0 +1,39 @@
+.batch-upload-container {
+  .upload-form {
+    display: flex;
+    flex-direction: column; /* Ensure form is column-oriented */
+    align-items: center;
+    
+    .upload-button,
+    .download-template-button {
+      margin: 10px;
+      padding: 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    
+    .download-template-button {
+      background-color: #28a745;
+    }
+
+    /* Add a container for inline layout */
+    .button-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .notification-popup {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}

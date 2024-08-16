@@ -13,6 +13,7 @@ import { ViewGadgetsComponent } from './view-gadgets/view-gadgets.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BatchUploadComponent } from './batch-upload/batch-upload.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     ViewGadgetsComponent,
     TransferOwnershipComponent,
     NotificationsComponent,
+    BatchUploadComponent,
 
   ],
   imports: [
