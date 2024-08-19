@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MongoService } from '../mongo.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
@@ -12,39 +11,13 @@ export class BatchUploadComponent {
   selectedFile: File | null = null;
   notificationVisible: boolean = false;
   notificationMessage: string = '';
-
-  constructor(private mongoService: MongoService) {}
+  selectedTab: string = 'Laptops';
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-    }
-  }
-
-  uploadCSV(): void {
-    if (this.selectedFile) {
-      this.mongoService.uploadCSV(this.selectedFile).then(result => {
-        console.log('CSV uploaded successfully:', result);
-        this.notificationMessage = 'CSV uploaded successfully!';
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false;
-        }, 3000);
-      }).catch(error => {
-        console.error('Error uploading CSV:', error);
-        this.notificationMessage = 'Error uploading CSV';
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false;
-        }, 3000);
-      });
-    } else {
-      this.notificationMessage = 'Please select a file to upload';
-      this.notificationVisible = true;
-      setTimeout(() => {
-        this.notificationVisible = false;
-      }, 3000);
+      // Handle file upload logic here if needed
     }
   }
 

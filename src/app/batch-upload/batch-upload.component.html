@@ -1,19 +1,79 @@
 <div class="batch-upload-container">
-  <div class="upload-form">
-    <h2 class="text-2xl font-semibold mb-4">Batch Upload</h2>
-    <div class="button-group">
-      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+  <div class="upload-section">
+    <!-- File Upload and Download Template Button -->
+    <div class="search-and-buttons">
       <input
-        class="file-input"
-        id="file_input"
+        class="search-input"
         type="file"
+        id="file_input"
         (change)="onFileChange($event)"
         accept=".csv"
       >
       <button class="download-template-button" (click)="downloadTemplate()">Download Template</button>
     </div>
-    <div class="notification-popup" *ngIf="notificationVisible">
-      <p>{{ notificationMessage }}</p>
+
+    <!-- Laptops and Phones Tabs -->
+    <div class="tab-buttons">
+      <button class="tab-button active">Laptops</button>
+      <button class="tab-button">Phones</button>
+    </div>
+
+    <!-- Table for Uploaded Data -->
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox"></th>
+            <th>Model</th>
+            <th>Serial Number</th>
+            <th>Device ID</th>
+            <th>Color</th>
+            <th>Registration Date</th>
+            <th>Storage Size</th>
+            <th>RAM</th>
+            <th>Device Type</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Apple</td>
+            <td>JADUNQIDJ23</td>
+            <td>JADUNQIDJ23</td>
+            <td>BLUE</td>
+            <td>2024-08-12</td>
+            <td>512GB</td>
+            <td>8GB</td>
+            <td>Laptop</td>
+            <td><a href="#">Edit</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Samsung Note 20</td>
+            <td>UOJCNJIE78T6</td>
+            <td>UOJCNJIE78T6</td>
+            <td>Blue</td>
+            <td>2024-02-20</td>
+            <td>512GB</td>
+            <td>8GB</td>
+            <td>Phone</td>
+            <td><a href="#">Edit</a></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>DELL LATITUDE</td>
+            <td>DNAXJE322ND</td>
+            <td>DNAXJE322ND</td>
+            <td>BLACK</td>
+            <td>2024-02-20</td>
+            <td>1TB</td>
+            <td>16GB</td>
+            <td>Laptop</td>
+            <td><a href="#">Edit</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
