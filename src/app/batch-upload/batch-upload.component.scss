@@ -1,29 +1,43 @@
 .batch-upload-container {
   .upload-form {
     display: flex;
-    flex-direction: column; /* Ensure form is column-oriented */
+    flex-direction: column; /* Keeps form elements column-oriented */
     align-items: center;
-    
-    .upload-button,
-    .download-template-button {
-      margin: 10px;
-      padding: 10px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    
-    .download-template-button {
-      background-color: #28a745;
+
+    h2 {
+      margin-bottom: 1rem;
     }
 
-    /* Add a container for inline layout */
     .button-group {
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 10px; /* Adds space between elements in the row */
+      width: 100%;
+
+      .file-input {
+        flex: 1;
+        // text-sm;
+        // text-gray-900;
+        border: 1px solid #ccc;
+        border-radius: 0.375rem;
+        background-color: white;
+        cursor: pointer;
+        padding: 0.5rem;
+        background-color: #fff;
+        width: 60%;
+      }
+
+      .download-template-button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        white-space: nowrap;
+      }
     }
   }
 
