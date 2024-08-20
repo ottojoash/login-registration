@@ -9,11 +9,11 @@
         accept=".csv, .xlsx"
       >
       <button class="download-template-button" (click)="downloadTemplate()">Download Template</button>
+      
     </div>
 
     <div class="tab-buttons">
-      <button class="tab-button active">Laptops</button>
-      <button class="tab-button">Phones</button>
+      <button class="download-template-button" (click)="registerGadgets()">Register Gadgets</button>
     </div>
 
     <div class="table-container">
@@ -28,21 +28,35 @@
             <th>Registration Date</th>
             <th>Storage Size</th>
             <th>RAM</th>
-            <th>Device Type</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Purchase Location</th>
+            <th>IMEI</th>
+            <th>SIM Type</th>
+            <th>Phone Number</th>
+            <th>Network</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let row of data">
             <td><input type="checkbox"></td>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[7] }}</td>
+            <td>{{ row.model }}</td>
+            <td>{{ row.serialNumber }}</td>
+            <td>{{ row.deviceId }}</td>
+            <td>{{ row.color }}</td>
+            <td>{{ row.registrationDate }}</td>
+            <td>{{ row.storageSize }}</td>
+            <td>{{ row.ram }}</td>
+            <td>{{ row.type }}</td>
+            <td>{{ row.brand }}</td>
+            <td>{{ row.description }}</td>
+            <td>{{ row.purchaseLocation }}</td>
+            <td>{{ row.imei }}</td>
+            <td>{{ row.simType }}</td>
+            <td>{{ row.phoneNumber }}</td>
+            <td>{{ row.network }}</td>
             <td><a href="#">Edit</a></td>
           </tr>
         </tbody>

@@ -57,6 +57,7 @@
 
 .table-container {
   max-height: 350px; /* Set a max height to make the table scrollable */
+  max-width: 950px;
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: auto; /* Enable horizontal scrolling */
   border: 1px solid #ddd; /* Add a border for better visibility */
