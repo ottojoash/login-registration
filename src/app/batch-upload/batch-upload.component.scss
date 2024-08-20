@@ -69,16 +69,20 @@
   background-color: white;
 }
 
-.data-table th,
-.data-table td {
+.data-table th {
+  position: sticky; /* Makes the header stick to the top */
+  top: 0; /* Positions it at the top of the table */
+  background-color: #f1f1f1; /* Keeps the background consistent */
+  z-index: 1; /* Ensures the header is above the data rows */
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.data-table th {
-  background-color: #f1f1f1;
-  font-weight: bold;
+.data-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .data-table a {
