@@ -1,24 +1,21 @@
 <div class="batch-upload-container">
   <div class="upload-section">
-    <!-- File Upload and Download Template Button -->
     <div class="search-and-buttons">
       <input
         class="search-input"
         type="file"
         id="file_input"
         (change)="onFileChange($event)"
-        accept=".csv"
+        accept=".csv, .xlsx"
       >
       <button class="download-template-button" (click)="downloadTemplate()">Download Template</button>
     </div>
 
-    <!-- Laptops and Phones Tabs -->
     <div class="tab-buttons">
       <button class="tab-button active">Laptops</button>
       <button class="tab-button">Phones</button>
     </div>
 
-    <!-- Table for Uploaded Data -->
     <div class="table-container">
       <table class="data-table">
         <thead>
@@ -36,40 +33,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let row of data">
             <td><input type="checkbox"></td>
-            <td>Apple</td>
-            <td>JADUNQIDJ23</td>
-            <td>JADUNQIDJ23</td>
-            <td>BLUE</td>
-            <td>2024-08-12</td>
-            <td>512GB</td>
-            <td>8GB</td>
-            <td>Laptop</td>
-            <td><a href="#">Edit</a></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Samsung Note 20</td>
-            <td>UOJCNJIE78T6</td>
-            <td>UOJCNJIE78T6</td>
-            <td>Blue</td>
-            <td>2024-02-20</td>
-            <td>512GB</td>
-            <td>8GB</td>
-            <td>Phone</td>
-            <td><a href="#">Edit</a></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>DELL LATITUDE</td>
-            <td>DNAXJE322ND</td>
-            <td>DNAXJE322ND</td>
-            <td>BLACK</td>
-            <td>2024-02-20</td>
-            <td>1TB</td>
-            <td>16GB</td>
-            <td>Laptop</td>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
             <td><a href="#">Edit</a></td>
           </tr>
         </tbody>

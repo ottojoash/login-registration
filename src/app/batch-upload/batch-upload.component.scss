@@ -56,11 +56,15 @@
 }
 
 .table-container {
-  overflow-x: auto;
+  max-height: 350px; /* Set a max height to make the table scrollable */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  border: 1px solid #ddd; /* Add a border for better visibility */
 }
 
 .data-table {
   width: 100%;
+  min-width: 800px; /* Set a minimum width for the table to ensure proper layout */
   border-collapse: collapse;
   background-color: white;
 }
