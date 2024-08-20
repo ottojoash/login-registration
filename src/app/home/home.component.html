@@ -3,14 +3,28 @@
     <button class="close-button" (click)="toggleSidebar()">&#10006;</button>
     <div class="user-info">
       <img src="assets/user.svg" alt="User Icon" class="profile-pic">
-      <p>Welcome Back,<br><strong>{{ user.profile.name }}</strong></p>
+      <p>Welcome Back,<br><strong>{{ user.profile.fullName }}</strong></p>
+      <!-- <p>{{ user.profile.email }}</p> Display email -->
     </div>
     <ul class="nav-links">
-      <li><a routerLink="/home/register-gadget" routerLinkActive="active"><img src="assets/register.svg" alt="Register Icon"> Register gadget</a></li>
-      <li><a routerLink="/home/report-gadget" routerLinkActive="active"><img src="assets/report.svg" alt="Report Icon"> Report gadget</a></li>
-      <li><a routerLink="/home/view-gadgets" routerLinkActive="active"><img src="assets/view.svg" alt="View Icon"> View gadgets</a></li>
-      <li><a routerLink="/home/transfer-ownership" routerLinkActive="active"><img src="assets/transfer.svg" alt="Transfer Icon"> Transfer Ownership</a></li>
-      <li><a routerLink="/home/notifications" routerLinkActive="active"><img src="assets/notification.svg" alt="Notification Icon"> Notifications</a></li>
+      <!-- Conditionally display the Register gadget link based on category -->
+      <li *ngIf="user.category !== 'Individual'">
+        <a routerLink="/home/register-gadget" routerLinkActive="active">
+          <img src="assets/register.svg" alt="Register Icon"> Register gadget
+        </a>
+      </li>
+      <li><a routerLink="/home/report-gadget" routerLinkActive="active">
+        <img src="assets/report.svg" alt="Report Icon"> Report gadget
+      </a></li>
+      <li><a routerLink="/home/view-gadgets" routerLinkActive="active">
+        <img src="assets/view.svg" alt="View Icon"> View gadgets
+      </a></li>
+      <li><a routerLink="/home/transfer-ownership" routerLinkActive="active">
+        <img src="assets/transfer.svg" alt="Transfer Icon"> Transfer Ownership
+      </a></li>
+      <li><a routerLink="/home/notifications" routerLinkActive="active">
+        <img src="assets/notification.svg" alt="Notification Icon"> Notifications
+      </a></li>
     </ul>
     <button (click)="logout()" class="logout-button">Log out</button>
   </div>

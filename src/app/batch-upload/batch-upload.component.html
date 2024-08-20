@@ -1,0 +1,66 @@
+<div class="batch-upload-container">
+  <div class="upload-section">
+    <div class="search-and-buttons">
+      <input
+        class="search-input"
+        type="file"
+        id="file_input"
+        (change)="onFileChange($event)"
+        accept=".csv, .xlsx"
+      >
+      <button class="download-template-button" (click)="downloadTemplate()">Download Template</button>
+      
+    </div>
+
+    <div class="tab-buttons">
+      <button class="download-template-button" (click)="registerGadgets()">Register Gadgets</button>
+    </div>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox"></th>
+            <th>Model</th>
+            <th>Serial Number</th>
+            <th>Device ID</th>
+            <th>Color</th>
+            <th>Registration Date</th>
+            <th>Storage Size</th>
+            <th>RAM</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Purchase Location</th>
+            <th>IMEI</th>
+            <th>SIM Type</th>
+            <th>Phone Number</th>
+            <th>Network</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td><input type="checkbox"></td>
+            <td>{{ row.model }}</td>
+            <td>{{ row.serialNumber }}</td>
+            <td>{{ row.deviceId }}</td>
+            <td>{{ row.color }}</td>
+            <td>{{ row.registrationDate }}</td>
+            <td>{{ row.storageSize }}</td>
+            <td>{{ row.ram }}</td>
+            <td>{{ row.type }}</td>
+            <td>{{ row.brand }}</td>
+            <td>{{ row.description }}</td>
+            <td>{{ row.purchaseLocation }}</td>
+            <td>{{ row.imei }}</td>
+            <td>{{ row.simType }}</td>
+            <td>{{ row.phoneNumber }}</td>
+            <td>{{ row.network }}</td>
+            <td><a href="#">Edit</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+.batch-upload-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.upload-section {
+  margin-bottom: 20px;
+}
+
+.search-and-buttons {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 8px;
+  margin-right: 10px;
+  font-size: 16px;
+  width: 50%;
+}
+
+.download-template-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.download-template-button:hover {
+  background-color: #0056b3;
+}
+
+.tab-buttons {
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background-color: #0056b3;
+}
+
+.tab-button:hover {
+  background-color: #0056b3;
+}
+
+.table-container {
+  max-height: 350px; /* Set a max height to make the table scrollable */
+  max-width: 950px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  border: 1px solid #ddd; /* Add a border for better visibility */
+}
+
+.data-table {
+  width: 100%;
+  min-width: 800px; /* Set a minimum width for the table to ensure proper layout */
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.data-table th {
+  position: sticky; /* Makes the header stick to the top */
+  top: 0; /* Positions it at the top of the table */
+  background-color: #f1f1f1; /* Keeps the background consistent */
+  z-index: 1; /* Ensures the header is above the data rows */
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.data-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.data-table a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.data-table a:hover {
+  text-decoration: underline;
+}

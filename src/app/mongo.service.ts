@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -12,12 +12,50 @@ export class MongoService {
 
   constructor(private http: HttpClient) { }
 
-  register(fullName: string, email: string, address: string, phoneNumber: string, brn: string, tin: string, password: string): Observable<any> {
-    const registerData = { fullName, email, address, phoneNumber, brn, tin, password };
+  register(registerData: {
+    fullName: string;
+    email: string;
+    address: string;
+    phoneNumber: string;
+    brn: string;
+    tin: string;
+    password: string;
+    category: string; // Added category parameter
+  }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/register`, registerData).pipe(
       catchError(this.handleError)
     );
   }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'An unknown error occurred!';
+    
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error
+      console.error('Client-side error:', error.error.message);
+      errorMessage = `Client-side error: ${error.error.message}`;
+    } else {
+      // Backend returned an unsuccessful response code
+      console.error(`Backend returned code ${error.status}, body was: ${JSON.stringify(error.error)}`);
+      errorMessage = `Backend error: ${error.status} - ${this.extractErrorMessage(error.error)}`;
+    }
+
+    // Return an observable with a user-facing error message
+    return throwError(() => new Error(errorMessage));
+  }
+
+  private extractErrorMessage(errorObj: any): string {
+    // Extracts a readable error message from the error object
+    if (errorObj && typeof errorObj === 'object') {
+      return Object.values(errorObj).join(' '); // Join all values into a single string
+    }
+    return 'Unknown error';
+  }
+
+
+
+
+
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
@@ -87,8 +125,8 @@ export class MongoService {
       }
     }).catch(this.handleError);
   }
-  handleError(handleError: any): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
+  // handleError(handleError: any): Promise<any> {
+  //   throw new Error('Method not implemented.');
+  // }
   
 }

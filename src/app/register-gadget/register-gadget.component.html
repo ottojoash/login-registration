@@ -40,11 +40,8 @@
           <input type="text" formControlName="storageSize" placeholder="Storage size">
         </div>
         <div class="form-group buttons">
-          <div class="upload-container">
-            <input type="file" (change)="onFileChange($event)" accept=".csv" id="csvFileInput" style="display: none;">
-            <label for="csvFileInput" class="upload-csv-button">
-              <img src="assets/upload.svg" alt="Upload Icon"> Upload CSV
-            </label>
+          <div class="form-group buttons">
+            <a routerLink="/home/batch-upload" class="upload-csv-button">Batch Upload CSV</a> <!-- Link to batch upload -->
           </div>
           <button type="submit" class="register-button">Register</button>
         </div>
