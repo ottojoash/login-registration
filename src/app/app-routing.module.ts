@@ -9,6 +9,7 @@ import { TransferOwnershipComponent } from './transfer-ownership/transfer-owners
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CategorySelectionComponent } from './category-selection/category-selection.component';
 import { BatchUploadComponent } from './batch-upload/batch-upload.component';
+import { BatchTransferOwnershipComponent } from './batch-transfer-ownership/batch-transfer-ownership.component';
 
 const routes: Routes = [
   { path: '', component: CategorySelectionComponent },
@@ -25,6 +26,9 @@ const routes: Routes = [
       { path: 'transfer-ownership', component: TransferOwnershipComponent },
       { path: 'notifications', component: NotificationsComponent },
       { path: 'batch-upload', component: BatchUploadComponent }, // Add route for batch upload
+      { path: 'batch-transfer-ownership', component: BatchTransferOwnershipComponent }, // New route
+      
+
 
     ]
   }

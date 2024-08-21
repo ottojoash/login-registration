@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router'; // Import Router
 import { Subject, of } from 'rxjs';
 import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 
@@ -18,7 +19,8 @@ export class TransferOwnershipComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router // Inject Router
   ) {
     this.transferForm = this.fb.group({
       gadgetType: ['', Validators.required],
@@ -124,5 +126,10 @@ export class TransferOwnershipComponent implements OnInit {
     } else {
       alert('Please fill in all required fields');
     }
+  }
+
+  // Add this function to handle navigation
+  navigateToBatchTransfer(): void {
+    this.router.navigate(['/home/batch-transfer-ownership']);
   }
 }

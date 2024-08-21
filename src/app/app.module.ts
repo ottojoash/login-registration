@@ -14,6 +14,7 @@ import { TransferOwnershipComponent } from './transfer-ownership/transfer-owners
 import { NotificationsComponent } from './notifications/notifications.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BatchUploadComponent } from './batch-upload/batch-upload.component';
+import { BatchTransferOwnershipComponent } from './batch-transfer-ownership/batch-transfer-ownership.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { BatchUploadComponent } from './batch-upload/batch-upload.component';
     TransferOwnershipComponent,
     NotificationsComponent,
     BatchUploadComponent,
+    BatchTransferOwnershipComponent,
 
   ],
   imports: [

@@ -6,6 +6,11 @@
   overflow-x: auto;
 }
 
+.overflow-y-auto {
+  overflow-y: auto;
+  max-height: 600px; /* Adjust max height as necessary */
+}
+
 .shadow-md {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0); /* Make shadow transparent */
 }
@@ -162,7 +167,6 @@ a:hover {
   color: #60a5fa;
 }
 
-/* New styles for model name and checkboxes */
 .text-gray-900 {
   color: #000000; /* Change model name color to black */
 }

@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';  // Import the Router service
 
 @Component({
   selector: 'app-batch-upload',
@@ -18,6 +19,7 @@ export class BatchUploadComponent {
 
   constructor(
     private http: HttpClient,
+    private router: Router,  // Inject the Router service
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId); // Check if running in browser
@@ -171,7 +173,7 @@ export class BatchUploadComponent {
         .subscribe(
           response => {
             console.log('Gadgets registered successfully', response);
-            // Handle successful registration, e.g., show a success message
+            this.router.navigate(['/home/view-gadgets']);  // Navigate to the "View Gadgets" page
           },
           error => {
             console.error('Failed to register gadgets:', error);
