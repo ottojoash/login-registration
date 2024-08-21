@@ -10,19 +10,23 @@
             <input type="text" id="table-search" [(ngModel)]="searchQuery" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full max-w-xs bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search gadgets...">
         </div>
     </div>
-  
-    <div class="tabs mb-4">
-        <button class="tab-button" [ngClass]="{'active': selectedTab === 'laptop'}" (click)="selectTab('laptop')">Laptops</button>
-        <button class="tab-button" [ngClass]="{'active': selectedTab === 'phone'}" (click)="selectTab('phone')">Phones</button>
+
+    <div class="flex justify-between items-center mb-4"> <!-- Modified this div to align tabs and transfer button -->
+        <div class="tabs">
+            <button class="tab-button" [ngClass]="{'active': selectedTab === 'laptop'}" (click)="selectTab('laptop')">Laptops</button>
+            <button class="tab-button" [ngClass]="{'active': selectedTab === 'phone'}" (click)="selectTab('phone')">Phones</button>
+        </div>
+        <!-- Transfer Button -->
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600" (click)="onTransfer()">Transfer</button>
     </div>
-  
+
     <div class="overflow-y-auto max-h-96"> <!-- Added this div for vertical scrolling -->
       <table class="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                   <th scope="col" class="p-2">
                       <div class="flex items-center">
-                          <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                          <input id="checkbox-all-search" type="checkbox" (change)="toggleAllGadgets($event)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                           <label for="checkbox-all-search" class="sr-only">checkbox</label>
                       </div>
                   </th>
@@ -59,7 +63,7 @@
               <tr *ngFor="let gadget of filteredGadgets(); let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td class="w-4 p-2">
                       <div class="flex items-center">
-                          <input id="checkbox-table-search-{{i}}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                          <input id="checkbox-table-search-{{i}}" type="checkbox" [(ngModel)]="gadget.selected" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                           <label for="checkbox-table-search-{{i}}" class="sr-only">checkbox</label>
                       </div>
                   </td>
@@ -94,5 +98,4 @@
           </tbody>
       </table>
     </div>
-  </div>
-  
+</div>

@@ -175,3 +175,37 @@
     accent-color: #ffffff; /* Change checkbox color to white */
   }
   
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bg-blue-500 {
+    background-color: #3b82f6;
+}
+
+.bg-blue-600:hover {
+    background-color: #2563eb;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
