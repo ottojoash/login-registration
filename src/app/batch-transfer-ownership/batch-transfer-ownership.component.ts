@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-batch-transfer-ownership',
@@ -9,14 +10,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class BatchTransferOwnershipComponent implements OnInit {
   searchQuery: string = '';
   gadgets: any[] = [];
-  selectedTab: string = 'laptop'; // Default tab
-  private token: string = ''; // Assume token is retrieved and set from a service
+  selectedTab: string = 'laptop';
+  private token: string = '';
+  showModal: boolean = false; // Control modal visibility
+  batchTransferForm!: FormGroup; // Form group for batch transfer form
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('authToken') || ''; // Retrieve token
+    this.token = localStorage.getItem('authToken') || '';
     this.fetchGadgets();
+    this.initializeForm(); // Initialize the form on component load
+  }
+
+  initializeForm() {
+    this.batchTransferForm = this.fb.group({
+      gadgetCountSummary: [{ value: '', disabled: true }],
+      ownerId: [{ value: '', disabled: true }, Validators.required],
+      phoneNumber: [{ value: '', disabled: true }, Validators.required],
+      transferTo: ['', Validators.required],
+      gadgetIds: [[]] // This will hold the IDs of selected gadgets
+    });
   }
 
   fetchGadgets(): void {
@@ -27,8 +41,7 @@ export class BatchTransferOwnershipComponent implements OnInit {
     this.http.get<any[]>('http://localhost:5000/api/gadgets/view', { headers })
       .subscribe(
         data => {
-          // Initialize 'selected' property for each gadget
-          this.gadgets = data.map(gadget => ({ ...gadget, selected: false }));
+          this.gadgets = data.map(gadget => ({ ...gadget, selected: false })); // Initialize 'selected' property
         },
         error => {
           console.error('Error fetching gadgets', error);
@@ -61,32 +74,58 @@ export class BatchTransferOwnershipComponent implements OnInit {
     });
   }
 
-  onTransfer(): void {
+  openTransferModal(): void {
+    this.prepareFormForModal(); // Populate the form before showing the modal
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
+
+  prepareFormForModal(): void {
     const selectedGadgets = this.gadgets.filter(gadget => gadget.selected);
-    if (selectedGadgets.length > 0) {
-      // Implement the transfer logic here
-      console.log('Gadgets to transfer:', selectedGadgets);
-      // Example: You can send a request to the backend to process the transfer
-      this.http.post('http://localhost:5000/api/transfer/batch', selectedGadgets, {
+
+    // Calculate the number of laptops and phones selected
+    const laptopCount = selectedGadgets.filter(gadget => gadget.type === 'laptop').length;
+    const phoneCount = selectedGadgets.filter(gadget => gadget.type === 'phone').length;
+    const totalCount = laptopCount + phoneCount;
+    const gadgetCountSummary = `Laptops: ${laptopCount}, Phones: ${phoneCount}, Total: ${totalCount}`;
+
+    // Extract owner details from token (assuming it's stored in the token payload)
+    const tokenData = JSON.parse(atob(this.token.split('.')[1]));
+    const ownerName = tokenData.fullName || '';
+    const ownerId = tokenData.tin || tokenData.brn || '';
+    const phoneNumber = tokenData.phoneNumber || '';
+
+    this.batchTransferForm.patchValue({
+      gadgetCountSummary,
+      ownerId,
+      phoneNumber,
+      gadgetIds: selectedGadgets.map(gadget => gadget._id) // Capture the gadget IDs
+    });
+  }
+
+  onSubmitBatchTransfer(): void {
+    if (this.batchTransferForm.valid) {
+      const formData = this.batchTransferForm.getRawValue(); // Get form data
+      console.log('Form Data:', formData); // Log form data (this can be removed in production)
+      this.http.post('http://localhost:5000/api/transfer/batch', formData, {
         headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${this.token}`
         })
-      })
-      .subscribe(
+      }).subscribe(
         response => {
-          alert('Ownership transferred successfully');
-          console.log('Transfer response:', response);
-          // Optionally, you could reset the gadgets' selection or refresh the list
-          this.gadgets.forEach(gadget => gadget.selected = false);
+          alert('Gadgets transferred successfully!');
+          this.closeModal(); // Close modal on success
         },
         error => {
-          console.error('Error transferring ownership', error);
-          alert('An error occurred while transferring ownership');
+          console.error('Error transferring gadgets:', error);
+          alert('An error occurred during transfer.');
         }
       );
     } else {
-      alert('Please select at least one gadget to transfer.');
+      alert('Please fill in all required fields.');
     }
   }
 }

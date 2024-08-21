@@ -11,16 +11,15 @@
         </div>
     </div>
 
-    <div class="flex justify-between items-center mb-4"> <!-- Modified this div to align tabs and transfer button -->
+    <div class="flex justify-between items-center mb-4">
         <div class="tabs">
             <button class="tab-button" [ngClass]="{'active': selectedTab === 'laptop'}" (click)="selectTab('laptop')">Laptops</button>
             <button class="tab-button" [ngClass]="{'active': selectedTab === 'phone'}" (click)="selectTab('phone')">Phones</button>
         </div>
-        <!-- Transfer Button -->
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600" (click)="onTransfer()">Transfer</button>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600" (click)="openTransferModal()">Transfer</button>
     </div>
 
-    <div class="overflow-y-auto max-h-96"> <!-- Added this div for vertical scrolling -->
+    <div class="overflow-y-auto max-h-96"> 
       <table class="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -98,4 +97,60 @@
           </tbody>
       </table>
     </div>
-</div>
+
+    <!-- Modal Background -->
+    <!-- Modal Background -->
+    <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <!-- Modal content -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-11/12 max-w-lg">
+            <h2 class="text-xl font-semibold mb-4">Batch Transfer Gadgets</h2>
+            
+            <!-- Transfer Form -->
+            <form [formGroup]="batchTransferForm" (ngSubmit)="onSubmitBatchTransfer()">
+                <!-- Gadget Count Summary -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 dark:text-gray-300 font-bold mb-2" for="gadgetCountSummary">
+                        Selected Gadgets
+                    </label>
+                    <input type="text" formControlName="gadgetCountSummary" id="gadgetCountSummary" class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" readonly />
+                </div>
+
+                <!-- Owner ID and Phone Number -->
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 font-bold mb-2" for="ownerId">
+                            Owner's ID
+                        </label>
+                        <input type="text" formControlName="ownerId" id="ownerId" class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" readonly />
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 font-bold mb-2" for="phoneNumber">
+                            Owner's Phone Number
+                        </label>
+                        <input type="tel" formControlName="phoneNumber" id="phoneNumber" class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" readonly />
+                    </div>
+                </div>
+
+                <!-- Transfer To (TIN/BRN) -->
+                <div class="mt-4">
+                    <label class="block text-gray-700 dark:text-gray-300 font-bold mb-2" for="transferTo">
+                        Transfer To (TIN/BRN)
+                    </label>
+                    <input 
+                        type="text" 
+                        formControlName="transferTo" 
+                        id="transferTo" 
+                        class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter TIN/BRN"
+                        required 
+                    />
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Submit</button>
+                    <button type="button" class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-600" (click)="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
