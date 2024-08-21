@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-batch-upload',
@@ -12,72 +14,101 @@ export class BatchUploadComponent {
   selectedFile: File | null = null;
   headers: string[] = [];
   data: any[] = [];
+  isBrowser: boolean;
 
-  constructor(private http: HttpClient) {} // Inject HttpClient
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId); // Check if running in browser
+  }
 
   onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      this.readFile(this.selectedFile);
+    if (this.isBrowser) {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        this.selectedFile = input.files[0];
+        this.readFile(this.selectedFile);
+      }
+    } else {
+      console.error('File handling is not supported in this environment.');
     }
   }
 
-  readFile(file: File): void {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      const binaryStr: string = e.target.result;
-      const workbook = XLSX.read(binaryStr, { type: 'binary' });
+  async readFile(file: File): Promise<void> {
+    if (this.isBrowser) {
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-      const firstSheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[firstSheetName];
-      const data: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const data: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-      this.headers = data[0] as string[]; // First row as headers
-      this.data = data.slice(1).map(row => {
-        return {
-          model: row[this.headers.indexOf('Model')],
-          serialNumber: row[this.headers.indexOf('Serial Number')],
-          deviceId: row[this.headers.indexOf('Device ID')],
-          color: row[this.headers.indexOf('Color')],
-          registrationDate: this.parseDate(row[this.headers.indexOf('Registration Date')]), // Adjusted date handling
-          storageSize: row[this.headers.indexOf('Storage Size')],
-          ram: row[this.headers.indexOf('RAM')],
-          type: (row[this.headers.indexOf('Type')] || '').toLowerCase(), // Ensure type is lowercase
-          brand: row[this.headers.indexOf('Brand')],
-          description: row[this.headers.indexOf('Description')],
-          purchaseLocation: row[this.headers.indexOf('Purchase Location')],
-          imei: row[this.headers.indexOf('IMEI')],
-          simType: row[this.headers.indexOf('SIM Type')],
-          phoneNumber: row[this.headers.indexOf('Phone Number')],
-          network: row[this.headers.indexOf('Network Type')]
-        };
-      });
-    };
-    reader.readAsBinaryString(file);
+        this.headers = data[0] as string[]; // First row as headers
+        this.data = data.slice(1).map(row => {
+          const type = (row[this.headers.indexOf('Type')] || '').toLowerCase();
+          const commonFields = {
+            type,
+            model: row[this.headers.indexOf('Model')],
+            brand: row[this.headers.indexOf('Brand')],
+            serialNumber: row[this.headers.indexOf('Serial Number')],
+            description: row[this.headers.indexOf('Description')],
+            purchaseLocation: row[this.headers.indexOf('Purchase Location')],
+            registrationDate: this.parseDate(row[this.headers.indexOf('Registration Date')]),
+            storageSize: row[this.headers.indexOf('Storage Size')],
+            color: row[this.headers.indexOf('Color')]
+          };
+
+          if (type === 'phone') {
+            return {
+              ...commonFields,
+              imei: row[this.headers.indexOf('IMEI')] || null,
+              simType: row[this.headers.indexOf('SIM Type')] || null,
+              phoneNumber: row[this.headers.indexOf('Phone Number')] || null,
+              network: row[this.headers.indexOf('Network')] || null
+            };
+          } else if (type === 'laptop') {
+            return {
+              ...commonFields,
+              deviceId: row[this.headers.indexOf('Device ID')] || null,
+              ram: row[this.headers.indexOf('RAM')] || null
+            };
+          } else {
+            console.warn('Unknown type:', type);
+            return null;
+          }
+        }).filter(item => item !== null); // Filter out null items
+
+        // Log the parsed data
+        console.log('Parsed Data:', JSON.stringify(this.data, null, 2));
+
+      } catch (error) {
+        console.error('Failed to read the file', error);
+      }
+    } else {
+      console.error('File reading is not supported in this environment.');
+    }
   }
 
-  // Simplified date parsing to just return the date string if it's valid
   parseDate(excelDate: any): string | null {
     if (!excelDate) return null;
 
-    // If the date is already a valid ISO string, just return it
     const date = new Date(excelDate);
     if (!isNaN(date.getTime())) {
       return date.toISOString();
     }
 
-    // If not, log a warning and return null
     console.warn('Invalid date value:', excelDate);
     return null;
   }
 
   downloadTemplate(): void {
     const headers = [
-      'Model', 'Serial Number', 'Device ID', 'Color', 'Registration Date', 
-      'Storage Size', 'RAM', 'Device Type', 
-      'Brand', 'Description', 'Purchase Location', 'IMEI', 'SIM Type', 
-      'Phone Number', 'Network Type', 'Type'
+      'Model', 'Serial Number', 'Device ID', 'Color', 'Registration Date',
+      'Storage Size', 'RAM', 'Type',
+      'Brand', 'Description', 'Purchase Location', 'IMEI', 'SIM Type',
+      'Phone Number', 'Network'
     ];
 
     const ws = XLSX.utils.aoa_to_sheet([headers]);
@@ -91,51 +122,67 @@ export class BatchUploadComponent {
 
   registerGadgets(): void {
     if (this.data.length > 0) {
-      const url = 'http://localhost:5000/api/gadgets/register';
+      const url = 'http://localhost:5000/api/gadgets/batch-register';
 
-      // Retrieve the token from local storage or another secure location
       const token = localStorage.getItem('authToken');
 
-      // Prepare the headers with the token
       const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       });
 
-      // Validate and sanitize data before sending
       const sanitizedData = this.data.map(gadget => {
+        const { type, ...commonFields } = gadget;
+
+        let specificFields = {};
+        if (type === 'phone') {
+          specificFields = {
+            imei: gadget.imei,  // IMEI required for phones
+            simType: gadget.simType,  // SIM Type required for phones
+            phoneNumber: gadget.phoneNumber,  // Phone number required for phones
+            network: gadget.network  // Network required for phones
+          };
+        } else if (type === 'laptop') {
+          specificFields = {
+            deviceId: gadget.deviceId,  // Device ID required for laptops
+            ram: gadget.ram  // RAM required for laptops
+          };
+        }
+
+        // Ensure all common fields are provided, even as null
         return {
-          model: gadget.model || '',
-          serialNumber: gadget.serialNumber || '',
-          deviceId: gadget.deviceId || '',
-          color: gadget.color || '',
-          registrationDate: gadget.registrationDate || new Date().toISOString(), // Use current date if not provided
-          storageSize: gadget.storageSize || '', // Ensure storage size is included
-          ram: gadget.ram || '',
-          type: (gadget.type || '').toLowerCase(),
-          brand: gadget.brand || '',
-          description: gadget.description || '',
-          purchaseLocation: gadget.purchaseLocation || '',
-          imei: gadget.imei || '',
-          simType: gadget.simType || '',
-          phoneNumber: gadget.phoneNumber || '',
-          network: gadget.network || ''
+          type,
+          model: commonFields.model || null,
+          brand: commonFields.brand || null,
+          serialNumber: commonFields.serialNumber || null,
+          description: commonFields.description || null,
+          purchaseLocation: commonFields.purchaseLocation || null,
+          registrationDate: commonFields.registrationDate || null,
+          storageSize: commonFields.storageSize || null,
+          color: commonFields.color || null,
+          ...specificFields
         };
       });
+
+      // Log the sanitized data before sending it to the server
+      console.log('Sanitized Data Being Sent:', JSON.stringify(sanitizedData, null, 2));
 
       this.http.post(url, sanitizedData, { headers })
         .subscribe(
           response => {
             console.log('Gadgets registered successfully', response);
-            // Add any additional logic you need here, like showing a success message
+            // Handle successful registration, e.g., show a success message
           },
           error => {
-            console.error('Failed to register gadgets', error);
-            // Add error handling logic here
+            console.error('Failed to register gadgets:', error);
+            if (error.status === 400) {
+              console.error('Bad Request: Please check the data format.');
+              console.error('Error details:', error.error); // Log the specific error details from the backend
+            }
           }
         );
     } else {
       console.warn('No data to register');
-      // Optionally, show a warning message to the user
     }
   }
 }
