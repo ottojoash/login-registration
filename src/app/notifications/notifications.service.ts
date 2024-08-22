@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NotificationsService {
-  private apiUrl = 'http://localhost:5000/api/notifications'; // Replace with your API endpoint
+  private apiUrl = 'https://gadget-backend.onrender.com/api/notifications'; // Replace with your API endpoint
 
   constructor(private http: HttpClient) { }
 

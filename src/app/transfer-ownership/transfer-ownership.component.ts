@@ -89,7 +89,7 @@ export class TransferOwnershipComponent implements OnInit {
     if (!query) {
       return of([]);
     }
-    return this.http.get<any[]>(`http://localhost:5000/api/reports/search?query=${query}`, {
+    return this.http.get<any[]>(`https://gadget-backend.onrender.com/api/reports/search?query=${query}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -113,7 +113,7 @@ export class TransferOwnershipComponent implements OnInit {
 
   onSubmit() {
     if (this.transferForm.valid) {
-      this.http.put('http://localhost:5000/api/transfer/piece', this.transferForm.getRawValue(), {
+      this.http.put('https://gadget-backend.onrender.com/api/transfer/piece', this.transferForm.getRawValue(), {
         headers: this.getAuthHeaders()
       })
       .subscribe(

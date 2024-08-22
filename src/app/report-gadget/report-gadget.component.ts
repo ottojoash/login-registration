@@ -58,7 +58,7 @@ export class ReportGadgetComponent implements OnInit {
     if (!query) {
       return of([]);
     }
-    return this.http.get<any[]>(`http://localhost:5000/api/reports/search?query=${query}`, {
+    return this.http.get<any[]>(`https://gadget-backend.onrender.com/api/reports/search?query=${query}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -81,7 +81,7 @@ export class ReportGadgetComponent implements OnInit {
   onSubmit() {
     console.log(this.reportForm.value); // Log form values
     if (this.reportForm.valid) {
-      this.http.post('http://localhost:5000/api/reports/report', this.reportForm.getRawValue(), {
+      this.http.post('https://gadget-backend.onrender.com/api/reports/report', this.reportForm.getRawValue(), {
         headers: this.getAuthHeaders()
       })
       .subscribe(

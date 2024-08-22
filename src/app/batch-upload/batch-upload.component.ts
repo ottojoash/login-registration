@@ -124,7 +124,7 @@ export class BatchUploadComponent {
 
   registerGadgets(): void {
     if (this.data.length > 0) {
-      const url = 'http://localhost:5000/api/gadgets/batch-register';
+      const url = 'https://gadget-backend.onrender.com/api/gadgets/batch-register';
 
       const token = localStorage.getItem('authToken');
 

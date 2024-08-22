@@ -26,7 +26,7 @@ export class ViewGadgetsComponent implements OnInit {
       'Authorization': `Bearer ${this.token}`
     });
 
-    this.http.get<any[]>('http://localhost:5000/api/gadgets/view', { headers })
+    this.http.get<any[]>('https://gadget-backend.onrender.com/api/gadgets/view', { headers })
       .subscribe(
         data => {
           this.gadgets = data;

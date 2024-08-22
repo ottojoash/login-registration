@@ -38,7 +38,7 @@ export class BatchTransferOwnershipComponent implements OnInit {
       'Authorization': `Bearer ${this.token}`
     });
 
-    this.http.get<any[]>('http://localhost:5000/api/gadgets/view', { headers })
+    this.http.get<any[]>('https://gadget-backend.onrender.com/api/gadgets/view', { headers })
       .subscribe(
         data => {
           this.gadgets = data.map(gadget => ({ ...gadget, selected: false })); // Initialize 'selected' property
@@ -110,7 +110,7 @@ export class BatchTransferOwnershipComponent implements OnInit {
     if (this.batchTransferForm.valid) {
       const formData = this.batchTransferForm.getRawValue(); // Get form data
       console.log('Form Data:', formData); // Log form data (this can be removed in production)
-      this.http.post('http://localhost:5000/api/transfer/batch', formData, {
+      this.http.post('https://gadget-backend.onrender.com/api/transfer/batch', formData, {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${this.token}`
         })

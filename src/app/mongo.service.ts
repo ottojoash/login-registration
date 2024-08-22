@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class MongoService {
 
-  private apiUrl = 'http://localhost:5000/api'; // Adjust the base URL as needed
+  private apiUrl = 'https://gadget-backend.onrender.com/api'; // Adjust the base URL as needed
 
   constructor(private http: HttpClient) { }
 
