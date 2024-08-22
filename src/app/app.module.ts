@@ -15,6 +15,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { HttpClientModule } from '@angular/common/http';
 import { BatchUploadComponent } from './batch-upload/batch-upload.component';
 import { BatchTransferOwnershipComponent } from './batch-transfer-ownership/batch-transfer-ownership.component';
+import { EditGadgetModalComponent } from './edit-gadget-modal/edit-gadget-modal.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { BatchTransferOwnershipComponent } from './batch-transfer-ownership/batc
     NotificationsComponent,
     BatchUploadComponent,
     BatchTransferOwnershipComponent,
+    EditGadgetModalComponent,
 
   ],
   imports: [

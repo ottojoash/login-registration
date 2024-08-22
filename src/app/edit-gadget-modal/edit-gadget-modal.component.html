@@ -1,0 +1,58 @@
+<!-- edit-gadget-modal.component.html -->
+<div class="modal" [ngClass]="{'hidden': !showModal}">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Edit Gadget</h2>
+      <form (ngSubmit)="saveChanges()">
+        <label for="type">Gadget Type:</label>
+        <select id="type" [(ngModel)]="gadget.type" name="type" required>
+          <option value="phone">Phone</option>
+          <option value="laptop">Laptop</option>
+        </select>
+  
+        <label for="model">Model:</label>
+        <input type="text" id="model" [(ngModel)]="gadget.model" name="model" required>
+        
+        <label for="serialNumber">Serial Number:</label>
+        <input type="text" id="serialNumber" [(ngModel)]="gadget.serialNumber" name="serialNumber" required>
+  
+        <!-- Conditional fields based on gadget type -->
+        <div *ngIf="gadget.type === 'phone'">
+          <label for="imei">IMEI:</label>
+          <input type="text" id="imei" [(ngModel)]="gadget.imei" name="imei" required>
+  
+          <label for="simCard">SIM Card:</label>
+          <input type="text" id="simCard" [(ngModel)]="gadget.simCard" name="simCard">
+        </div>
+  
+        <div *ngIf="gadget.type === 'laptop'">
+          <label for="deviceId">Device ID:</label>
+          <input type="text" id="deviceId" [(ngModel)]="gadget.deviceId" name="deviceId" required>
+  
+          <label for="operatingSystem">Operating System:</label>
+          <input type="text" id="operatingSystem" [(ngModel)]="gadget.operatingSystem" name="operatingSystem" required>
+        </div>
+  
+        <label for="storageSize">Storage Size:</label>
+        <input type="text" id="storageSize" [(ngModel)]="gadget.storageSize" name="storageSize" required>
+  
+        <label for="color">Color:</label>
+        <input type="text" id="color" [(ngModel)]="gadget.color" name="color" required>
+  
+        <label for="registrationDate">Registration Date:</label>
+        <input type="date" id="registrationDate" [(ngModel)]="gadget.registrationDate" name="registrationDate" required>
+  
+        <label for="owner">Owner:</label>
+        <input type="text" id="owner" [(ngModel)]="gadget.owner" name="owner" required>
+  
+        <label for="warrantyStatus">Warranty Status:</label>
+        <input type="text" id="warrantyStatus" [(ngModel)]="gadget.warrantyStatus" name="warrantyStatus" required>
+  
+        <label for="price">Price:</label>
+        <input type="number" id="price" [(ngModel)]="gadget.price" name="price" required>
+  
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  

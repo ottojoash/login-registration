@@ -12,6 +12,7 @@ export class RegisterGadgetComponent implements OnInit {
   selectedTab: string = 'laptop';  // Default tab
   notificationVisible: boolean = false;
   notificationMessage: string = ''; // Initialize with an empty string
+  notificationType: 'success' | 'error' | 'warning' = 'success';  // Notification type
   selectedFile: File | null = null; // Store the selected file
 
   constructor(private fb: FormBuilder, private mongoService: MongoService) {
@@ -46,32 +47,37 @@ export class RegisterGadgetComponent implements OnInit {
   
       this.mongoService.addGadget(formData).then(result => {
         console.log('Gadget registered successfully:', result);
-        this.notificationMessage = 'Gadget registered successfully!';
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false;
-        }, 3000);
+        this.showNotification('Gadget registered successfully!', 'success');
         this.registerForm.reset();
         this.selectedTab = 'laptop';
         this.selectTab(this.selectedTab);
       }).catch(error => {
         console.error('Error registering gadget:', error);
-        this.notificationMessage = 'Error registering gadget';
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false;
-        }, 3000);
+        this.showNotification('Error registering gadget', 'error');
       });
     } else {
       console.log('Form is invalid');
-      this.notificationMessage = 'Please fill out all required fields';
-      this.notificationVisible = true;
-      setTimeout(() => {
-        this.notificationVisible = false;
-      }, 3000);
+      this.showNotification('Please fill out all required fields', 'warning');
     }
   }
-  
+
+  showNotification(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.notificationMessage = message;
+    this.notificationType = type;
+    this.notificationVisible = true;
+
+    console.log('Notification Message:', this.notificationMessage); // Add this line
+    console.log('Notification Type:', this.notificationType);       // Add this line  
+
+    setTimeout(() => {
+      this.notificationVisible = false;
+    }, 3000);
+  }
+
+  closeNotification(): void {
+    this.notificationVisible = false;
+  }
+
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -86,18 +92,10 @@ export class RegisterGadgetComponent implements OnInit {
     if (file) {
       this.mongoService.uploadCSV(file).then(result => {
         console.log('CSV uploaded successfully:', result);
-        this.notificationMessage = 'CSV uploaded successfully!';
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false;
-        }, 3000);
+        this.showNotification('CSV uploaded successfully!', 'success');
       }).catch(error => {
         console.error('Error uploading CSV:', error);
-        this.notificationMessage = 'Error uploading CSV';
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false;
-        }, 3000);
+        this.showNotification('Error uploading CSV', 'error');
       });
     }
   }

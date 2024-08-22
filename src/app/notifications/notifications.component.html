@@ -1,12 +1,26 @@
 <div class="notifications-container">
-  <div class="header">
-      <h1>Notifications</h1>
+    <div class="notifications-header">
+        <h1>Notifications <span class="notification-count">{{ notifications.length }}</span></h1>
+        <a href="#" class="mark-all-read">Mark all as read</a>
+    </div>
+    <div class="notifications-list">
+        <div class="notification-item" *ngFor="let notification of notifications">
+            <div class="notification-avatar">
+                <img [src]="notification.avatar" alt="User Avatar">
+            </div>
+            <div class="notification-content">
+                <div class="notification-title">
+                    <strong>{{ notification.name }}</strong> {{ notification.action }} 
+                    <span *ngIf="notification.group" class="notification-group">{{ notification.group }}</span>
+                    <span *ngIf="notification.isNew" class="notification-dot"></span>
+                </div>
+                <div class="notification-message">{{ notification.message }}</div>
+                <div class="notification-date">{{ notification.date }}</div>
+            </div>
+            <div *ngIf="notification.image" class="notification-image">
+                <img [src]="notification.image" alt="Related Image">
+            </div>
+        </div>
+    </div>
   </div>
-  <div class="notifications-list">
-      <div class="notification-item" *ngFor="let notification of notifications">
-          <div class="notification-title">{{ notification.title }}</div>
-          <div class="notification-message">{{ notification.message }}</div>
-          <div class="notification-date">{{ notification.date }}</div>
-      </div>
-  </div>
-</div>
+  

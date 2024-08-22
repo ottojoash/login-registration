@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router';
 import { Subject, of } from 'rxjs';
 import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 
@@ -14,21 +14,24 @@ export class TransferOwnershipComponent implements OnInit {
   transferForm: FormGroup;
   searchInput$ = new Subject<string>();
   gadgetList: any[] = [];
-  showGadgetList: boolean = false; // Visibility for gadget dropdown
+  showGadgetList: boolean = false;
   searchQuery: any;
+  notificationVisible: boolean = false;
+  notificationMessage: string = '';
+  notificationType: 'success' | 'error' | 'warning' = 'success';
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router // Inject Router
+    private router: Router
   ) {
     this.transferForm = this.fb.group({
       gadgetType: ['', Validators.required],
       gadgetModel: [''],
       imei: [''],
       serialNumber: ['', Validators.required],
-      ownerId: [{ value: '', disabled: true }, Validators.required], // Disabled
-      phoneNumber: [{ value: '', disabled: true }], // Disabled
+      ownerId: [{ value: '', disabled: true }, Validators.required],
+      phoneNumber: [{ value: '', disabled: true }],
       storage: ['', Validators.required],
       transferTo: ['', Validators.required],
       transferDetails: ['', Validators.required]
@@ -46,7 +49,7 @@ export class TransferOwnershipComponent implements OnInit {
       )
       .subscribe(data => {
         this.gadgetList = data;
-        this.showGadgetList = true; // Show gadget list
+        this.showGadgetList = true;
       });
   }
 
@@ -62,12 +65,12 @@ export class TransferOwnershipComponent implements OnInit {
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
-        const tokenData = JSON.parse(atob(token.split('.')[1])); // Decode token payload
-        const { phoneNumber, tin, brn } = tokenData; // Extract necessary fields
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const { phoneNumber, tin, brn } = tokenData;
 
         this.transferForm.patchValue({
-          phoneNumber, // Set phone number field
-          ownerId: tin || brn // Set TIN or BRN; choose the non-empty value
+          phoneNumber,
+          ownerId: tin || brn
         });
       } catch (error) {
         console.error('Error decoding token', error);
@@ -93,11 +96,11 @@ export class TransferOwnershipComponent implements OnInit {
 
   selectGadget(gadget: any) {
     this.transferForm.patchValue({
-        gadgetType: gadget.type,
-        gadgetModel: gadget.model,
-        imei: gadget.imei,
-        serialNumber: gadget.serialNumber,
-        storage: gadget.storageSize
+      gadgetType: gadget.type,
+      gadgetModel: gadget.model,
+      imei: gadget.imei,
+      serialNumber: gadget.serialNumber,
+      storage: gadget.storageSize
     });
     this.gadgetList = [];
     this.showGadgetList = false;
@@ -115,20 +118,32 @@ export class TransferOwnershipComponent implements OnInit {
       })
       .subscribe(
         response => {
-          alert('Ownership transferred successfully');
+          this.showNotification('Ownership transferred successfully', 'success');
           this.transferForm.reset();
         },
         (error: HttpErrorResponse) => {
           console.error('Error transferring ownership', error);
-          alert('An error occurred while transferring ownership');
+          this.showNotification('An error occurred while transferring ownership', 'error');
         }
       );
     } else {
-      alert('Please fill in all required fields');
+      this.showNotification('Please fill in all required fields', 'warning');
     }
   }
 
-  // Add this function to handle navigation
+  showNotification(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.notificationMessage = message;
+    this.notificationType = type;
+    this.notificationVisible = true;
+    setTimeout(() => {
+      this.notificationVisible = false;
+    }, 3000);
+  }
+
+  closeNotification(): void {
+    this.notificationVisible = false;
+  }
+
   navigateToBatchTransfer(): void {
     this.router.navigate(['/home/batch-transfer-ownership']);
   }
