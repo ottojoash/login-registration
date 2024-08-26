@@ -1,71 +1,76 @@
-/* You can add global styles to this file, and also import other style files */
+/* Import Tailwind base styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.btn-primary{
+.btn-primary {
     background-color: #6e4e5f !important;
     border-color: #bd0061 !important;
     align-items: flex-end;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: #bd0061 !important;
     border-color: #bd0061 !important;
     align-items: flex-end;
 }
-.anchor{
+
+.anchor {
     color: #bd0061;
 }
-.anchor:hover{
+
+.anchor:hover {
     text-decoration: underline;
-    cursor:grab;
+    cursor: grab;
 }
-.txt-color-mg{
-    color:#bd0061 ;
+
+.txt-color-mg {
+    color: #bd0061;
 }
-.txt-error{
+
+.txt-error {
     color: red;
 }
+
 /* Global Styles */
 html, body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f2f5; /* Light gray background */
-  }
-  
-  body {
+}
+
+body {
     background-color: #ffffff; /* Ensure body background is white */
-  }
-  
-  input, button, textarea {
+}
+
+input, button, textarea {
     background-color: #ffffff; /* Ensure input fields and buttons have a white background */
     border-color: #d1d5db; /* Light gray border */
     color: #333333; /* Dark text color for readability */
-  }
-  
-  /* Style for input fields */
-  input {
+}
+
+/* Style for input fields */
+input {
     border-radius: 0.375rem; /* Rounded corners */
     padding: 0.5rem 0.75rem; /* Padding inside input fields */
-  }
-  
-  /* Style for buttons */
-  button {
+}
+
+/* Style for buttons */
+button {
     border-radius: 0.375rem; /* Rounded corners */
     padding: 0.5rem 1rem; /* Padding inside buttons */
-  }
-  
-  /* Ensure dark mode styles are not applied */
-  @media (prefers-color-scheme: dark) {
+}
+
+/* Ensure dark mode styles are not applied */
+@media (prefers-color-scheme: dark) {
     /* Override any dark mode styles here */
     body {
-      background-color: #ffffff; /* Keep background white in dark mode */
+        background-color: #ffffff; /* Keep background white in dark mode */
     }
-  
+
     input, button, textarea {
-      background-color: #ffffff; /* Ensure consistent background */
-      color: #333333; /* Consistent text color */
+        background-color: #ffffff; /* Ensure consistent background */
+        color: #333333; /* Consistent text color */
     }
-  }
-  
+}
