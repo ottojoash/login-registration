@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BatchUploadComponent } from './batch-upload/batch-upload.component';
 import { BatchTransferOwnershipComponent } from './batch-transfer-ownership/batch-transfer-ownership.component';
 import { EditGadgetModalComponent } from './edit-gadget-modal/edit-gadget-modal.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { EditGadgetModalComponent } from './edit-gadget-modal/edit-gadget-modal.
     BrowserAnimationsModule,
     ReactiveFormsModule,  // Ensure this is added to imports
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

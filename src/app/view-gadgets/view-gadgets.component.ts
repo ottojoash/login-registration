@@ -9,8 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ViewGadgetsComponent implements OnInit {
   searchQuery: string = '';
   gadgets: any[] = [];
-  filteredGadgetsList: any[] = [];
   selectedTab: string = 'laptop'; // Default tab
+  page: number = 1; // Current page for pagination
   private token: string = ''; // Assume token is retrieved and set from a service
 
   constructor(private http: HttpClient) { }
@@ -39,6 +39,7 @@ export class ViewGadgetsComponent implements OnInit {
 
   selectTab(tab: string): void {
     this.selectedTab = tab;
+    this.page = 1; // Reset to the first page when tab changes
   }
 
   filteredGadgets() {
