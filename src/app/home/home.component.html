@@ -1,12 +1,25 @@
-<div class="header"></div>
+<!-- <div class="header">
+  <div class="user-info-left">
+    <img src="assets/user.svg" alt="User Icon" class="profile-pic">
+    <p class="profile">{{ user.profile.fullName }}</p>
+    <button (click)="logout()" class="logout-button">
+      <i class="fas fa-sign-out-alt"></i> <!-- Logout Icon -->
+    <!-- </button>
+  </div>
+</div> --> -->
+<div class="header">
+  <div class="logo">MyApp</div> <!-- Logo or other left-side content -->
+  <div class="user-info-right">
+    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+    <span class="username">{{ user.profile.fullName }}</span>
+    <button (click)="logout()" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</div>
+
 
 <div class="dashboard-container">
   <div class="sidebar" [class.open]="isSidebarOpen">
     <button class="close-button" (click)="toggleSidebar()">&#10006;</button>
-    <div class="user-info">
-      <img src="assets/user.svg" alt="User Icon" class="profile-pic">
-      <p>Welcome Back,<br><strong>{{ user.profile.fullName }}</strong></p>
-    </div>
     <ul class="nav-links">
       <li *ngIf="user.category !== 'Individual'">
         <a routerLink="/home/register-gadget" routerLinkActive="active">
@@ -26,7 +39,6 @@
         <img src="assets/notification.svg" alt="Notification Icon"> Notifications
       </a></li>
     </ul>
-    <button (click)="logout()" class="logout-button">Log out</button>
   </div>
 
   <div class="main-content">
