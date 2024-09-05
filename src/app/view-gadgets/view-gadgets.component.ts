@@ -12,6 +12,8 @@ export class ViewGadgetsComponent implements OnInit {
   selectedTab: string = 'laptop'; // Default tab
   page: number = 1; // Current page for pagination
   private token: string = ''; // Assume token is retrieved and set from a service
+  isModalOpen: boolean = false; 
+  selectedGadget: any = null; 
 
   constructor(private http: HttpClient) { }
 
@@ -54,5 +56,26 @@ export class ViewGadgetsComponent implements OnInit {
       (gadget.color && gadget.color.toLowerCase().includes(query)) ||
       (gadget.registrationDate && gadget.registrationDate.toLowerCase().includes(query))
     ).filter(gadget => gadget.type === this.selectedTab);
+  }
+
+  openEditModal(gadget: any): void {
+    this.selectedGadget = gadget;
+    this.isModalOpen = true;
+  }
+
+  closeEditModal(): void {
+    this.isModalOpen = false;
+    this.selectedGadget = null; // Optionally reset the selected gadget
+  }
+
+  handleSave(updatedGadget: any): void {
+    if (updatedGadget) {
+      // Handle saving logic here (e.g., update the gadget in the backend)
+      const index = this.gadgets.findIndex(g => g.id === updatedGadget.id);
+      if (index !== -1) {
+        this.gadgets[index] = updatedGadget;
+      }
+    }
+    this.closeEditModal(); // Close the modal after saving
   }
 }

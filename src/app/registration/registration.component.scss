@@ -20,18 +20,20 @@
 
 .register-left {
   flex: 1;
-  background-color: #e8e8e8;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
 }
 
 .register-left img {
   max-width: 100%;
   max-height: 100%;
-  height: auto;
+  height: 100%; /* Set height to 100% to increase the height */
+  object-fit: cover; /* Ensures the image covers the container */
 }
+
 
 .register-right {
   flex: 1;
