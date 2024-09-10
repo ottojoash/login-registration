@@ -62,20 +62,31 @@ export class ViewGadgetsComponent implements OnInit {
     this.selectedGadget = gadget;
     this.isModalOpen = true;
   }
-
+  
   closeEditModal(): void {
     this.isModalOpen = false;
-    this.selectedGadget = null; // Optionally reset the selected gadget
+    this.selectedGadget = null;
   }
-
+  
   handleSave(updatedGadget: any): void {
     if (updatedGadget) {
-      // Handle saving logic here (e.g., update the gadget in the backend)
+      // Update the gadget in the local list
       const index = this.gadgets.findIndex(g => g.id === updatedGadget.id);
       if (index !== -1) {
         this.gadgets[index] = updatedGadget;
       }
+  
+      // Optionally, send an update request to the backend
+      this.http.put(`https://gadget-backend.onrender.com/api/gadgets/${updatedGadget.id}`, updatedGadget, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.token}`
+        })
+      }).subscribe(
+        response => console.log('Update successful', response),
+        error => console.error('Error updating gadget', error)
+      );
     }
     this.closeEditModal(); // Close the modal after saving
   }
+  
 }

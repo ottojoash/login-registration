@@ -58,11 +58,13 @@
             <!-- Format the registration date to show only the date -->
             <td class="px-4 py-2">{{ gadget.registrationDate | date:'mediumDate' }}</td>
             <td class="px-4 py-2 action-buttons">
-              <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-            </td>
+              <button class="text-blue-600 dark:text-blue-500 hover:underline" (click)="openEditModal(gadget)">Edit</button>
+            </td>            
           </tr>
         </tbody>
       </table>
+      <!-- Modal wrapper -->
+      <app-edit-gadget-modal *ngIf="isModalOpen" [gadget]="selectedGadget" (save)="handleSave($event)" (close)="closeEditModal()"></app-edit-gadget-modal>
       <pagination-controls (pageChange)="page = $event" class="pagination"></pagination-controls>
     </div>
   </div>
