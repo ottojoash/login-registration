@@ -1,7 +1,7 @@
 <div class="modal-overlay" *ngIf="gadget">
   <div class="modal-content">
     <h3>Edit Gadget</h3>
-    <form (ngSubmit)="onSave()">
+    <form (ngSubmit)="onSave(updatedGadget)">
       <label>
         Model:
         <input [(ngModel)]="updatedGadget.model" name="model" required>

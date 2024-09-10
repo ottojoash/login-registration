@@ -20,19 +20,32 @@ export class EditGadgetModalComponent {
     }
   }
 
-  onSave(): void {
-    if (this.updatedGadget._id) {
-      this.gadgetService.updateGadget(this.updatedGadget._id, this.updatedGadget).subscribe(
-        (response: any) => {
-          console.log('Gadget updated successfully', response);
-          this.close.emit(); // Close the modal after saving
-        },
-        (error: any) => {
-          console.error('Error updating gadget:', error);
-        }
-      );
+  onSave(updatedGadget: any) {
+    if (!updatedGadget) {
+      console.error('No gadget data provided');
+      return;
     }
+  
+    const gadgetId = updatedGadget._id;
+  
+    if (!gadgetId) {
+      console.error('Gadget ID is missing');
+      return;
+    }
+  
+    this.gadgetService.updateGadget(gadgetId, updatedGadget).subscribe(
+      (response) => {
+        console.log('Gadget updated successfully:', response);
+        // this.updateGadgetInList(updatedGadget); // Update the gadget in the local list
+        this.onClose(); // Close the modal after saving
+      },
+      (error) => {
+        console.error('Error updating gadget:', error);
+      }
+    );
   }
+  
+  
 
   onClose(): void {
     this.close.emit(); // Emit the close event to the parent component
