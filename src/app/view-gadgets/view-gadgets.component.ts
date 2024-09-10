@@ -66,6 +66,7 @@ export class ViewGadgetsComponent implements OnInit {
   closeEditModal(): void {
     this.isModalOpen = false;
     this.selectedGadget = null;
+    this.fetchGadgets(); // Re-fetch gadgets when modal is closed
   }
   
   handleSave(updatedGadget: any): void {
@@ -75,18 +76,21 @@ export class ViewGadgetsComponent implements OnInit {
       if (index !== -1) {
         this.gadgets[index] = updatedGadget;
       }
-  
+
       // Optionally, send an update request to the backend
-      this.http.put(`https://gadget-backend.onrender.com/api/gadgets/${updatedGadget.id}`, updatedGadget, {
+      this.http.put(`https://gadget-backend.onrender.com/api/gadgets/update/${updatedGadget.id}`, updatedGadget, {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${this.token}`
         })
       }).subscribe(
-        response => console.log('Update successful', response),
-        error => console.error('Error updating gadget', error)
+        response => {
+          console.log('Update successful', response);
+          this.closeEditModal(); // Close the modal after saving and re-fetch gadgets
+        },
+        error => {
+          console.error('Error updating gadget', error);
+        }
       );
     }
-    this.closeEditModal(); // Close the modal after saving
   }
-  
 }
